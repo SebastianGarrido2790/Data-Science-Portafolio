@@ -9,7 +9,7 @@ Este portafolio contiene una colección de proyectos de ciencia de datos que dem
 - `US_Accidents/`: Exploracion exhaustiva de dados para obtener insights acerca de los accidentes de trafico en los Estados Unidos.
 - `Ultra_Marathon/`: Proyectos de analisis de datos para averiguar las relciones de los distintos tramos de marathones (50km, 100km) con la edad, el sexo, la estación del año, etc.
 - `NN_Sentiment_Analysis/`: Uso de distintos tipos de redes neuronales (FFNN, RNN, CNN, entre otras) para averiguar el sentimiento positivo o negativo de las personas.
-- `NN_California_House_Prices`: Implementación de regresion lineal (LinearRegression, Lasso, Rigde y ElasticNet), sumado a el ajuste de hiper parametros de redes neuronales.
+- `California_House_Prices`: Implementación de regresion lineal (LinearRegression, Lasso, Rigde y ElasticNet), sumado a el ajuste de hiper parametros de redes neuronales.
 - `Flight_Price`: Entrenamiento de un modelo RandomForestRegressor para predecir el coste de los vuelos.
 - `Aussie_Rain`: En este projecto se emplea StackingClassifier para predecir si lloverá el día de mañana. Además se examina una alternativa para mejorar el modelo, integrando SHAP y MLflow.
 - `Sentiment_Analysis_with_Tranformers`: Implementaci+on de tres tecnicas (VADER, Roberta y Transformers) para analizar las reseñas de Amazon fine food dataset.
