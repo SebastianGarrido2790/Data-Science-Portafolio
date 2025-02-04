@@ -4,6 +4,8 @@
 Este portafolio contiene una colección de proyectos de ciencia de datos que demuestran habilidades en Análisis Exploratorio de Datos (EDA), modelado predictivo con scikit-learn, deep learning con TensorFlow, y el uso de pipelines para preprocesamiento de datos. Cada proyecto está documentado con detalle y presenta ejemplos prácticos de cómo abordar diferentes problemas de ciencia de datos.
 
 ## Estructura del Portafolio
+Análisis de ventas integral
+- `Superstore Sales Analysis`: Comprensión del desempeño empresarial y las preferencias de los clientes en todos los segmentos, regiones y categorías de productos.
 - `EPL_Teams/`: Explorarion de datos de la English Premier League y creación de modelo predictivo (RandomForestRegressor, Lasso, XGBRegressor) para determinar el numero de goles.
 - `US_Accidents/`: Exploracion exhaustiva de dados para obtener insights acerca de los accidentes de trafico en los Estados Unidos.
 - `Ultra_Marathon/`: Proyectos de analisis de datos para averiguar las relciones de los distintos tramos de marathones (50km, 100km) con la edad, el sexo, la estación del año, etc.
