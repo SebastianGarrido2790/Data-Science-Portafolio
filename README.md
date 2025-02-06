@@ -7,7 +7,7 @@ Este portafolio contiene una colección de proyectos de ciencia de datos que dem
 - `Superstore Sales Analysis`: Análisis de ventas integral: Comprensión del desempeño empresarial y las preferencias de los clientes en todos los segmentos, regiones y categorías de productos.
 - `EPL_Teams/`: Explorarion de datos de la English Premier League y creación de modelo predictivo (RandomForestRegressor, Lasso, XGBRegressor) para determinar el numero de goles.
 - `US_Accidents/`: Exploracion exhaustiva de dados para obtener insights acerca de los accidentes de trafico en los Estados Unidos.
-- `Ultra_Marathon/`: Proyectos de analisis de datos para averiguar las relciones de los distintos tramos de marathones (50km, 100km) con la edad, el sexo, la estación del año, etc.
+- `Ultra_Marathon/`: Proyecto de analisis de datos para averiguar las relciones de los distintos tramos de marathones (50km, 100km) con la edad, el sexo, la estación del año, etc. La idea es conocer estas carreras de larguísima duración analizando multiples visualizaciones.
 - `NN_Sentiment_Analysis/`: Uso de distintos tipos de redes neuronales (FFNN, RNN, CNN, entre otras) para averiguar el sentimiento positivo o negativo de las personas.
 - `California_House_Prices`: Implementación de regresion lineal (LinearRegression, Lasso, Rigde y ElasticNet), sumado a el ajuste de hiper parametros de redes neuronales.
 - `Flight_Price`: Entrenamiento de un modelo RandomForestRegressor para predecir el coste de los vuelos.
