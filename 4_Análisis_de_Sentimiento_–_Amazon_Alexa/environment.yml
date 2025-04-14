@@ -1,0 +1,27 @@
+name: alexa_sentiment_analysis
+channels:
+  - pytorch          # For PyTorch-specific packages
+  - conda-forge      # For additional compatibility
+  - defaults         # Fallback channel
+dependencies:
+  - python=3.11.9    # Consistent with your current version
+  - numpy>=1.23.5
+  - pandas>=1.5.3
+  - matplotlib>=3.6.0
+  - seaborn>=0.12.2
+  - nltk>=3.8.1
+  - scikit-learn=1.4.2
+  - xgboost=2.1.1
+  - wordcloud>=1.8.2
+  - flask>=2.2.2
+  - jupyter>=1.0.0
+  - tqdm>=4.64.1
+  - pytorch::pytorch=2.5.0  # Specific version for consistency with transformers
+  - pytorch::cpuonly        # Ensure CPU-only PyTorch (no CUDA bloat)
+  - conda-forge::accelerate=1.5.2  # Explicitly include accelerate via conda-forge
+  - pip>=22.3.1
+  - pip:
+    - transformers==4.49.0  # Exact version matching our successful install
+    - scipy>=1.10.0
+    - pickle-mixin>=1.0.2
+    - regex>=2022.10.31
