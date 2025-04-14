@@ -1,0 +1,28 @@
+embedding:
+  embedding_model: "huggingface"  # openai
+  huggingface_model: "sentence-transformers/all-MiniLM-L6-v2"
+
+summary:
+  summary_provider: "huggingface"  # Change to "openai" to use OpenAI
+  huggingface_summaries:
+    default_model: "sshleifer/distilbart-cnn-12-6"  # Suited for general text summarization
+    max_tokens: 20
+    temperature: 0.8
+    # dynamic_length: true
+
+data:
+  test_size: 0.2
+  stratify: true
+  batch_size: 10
+
+model:
+  scale_features: true
+  early_stopping_rounds: 10
+  learning_rate: 0.1
+  random_state: 42
+  save_format: "both"  # Control model saving format ('json', 'pickle', 'both')
+
+logging:
+  level: INFO
+  format: "%(asctime)s - %(levelname)s - %(message)s"
+  log_file: "logs/train_model.log"
