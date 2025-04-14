@@ -1,0 +1,6 @@
+4_Análisis_de_Sentimiento_–_Amazon_Alexa/**/*.safetensors filter=lfs diff=lfs merge=lfs -text
+4_Análisis_de_Sentimiento_–_Amazon_Alexa/**/*.pt filter=lfs diff=lfs merge=lfs -text
+4_Análisis_de_Sentimiento_–_Amazon_Alexa/**/*.bin filter=lfs diff=lfs merge=lfs -text
+4_Análisis_de_Sentimiento_–_Amazon_Alexa/**/*.pkl filter=lfs diff=lfs merge=lfs -text
+4_Análisis_de_Sentimiento_–_Amazon_Alexa/src/models/distilbert_results/checkpoint-* !text -filter -merge -diff
+*.safetensors !text !filter !merge !diff
