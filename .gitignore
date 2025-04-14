@@ -172,3 +172,4 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+4_Análisis_de_Sentimiento_–_Amazon_Alexa/src/models/distilbert_results/checkpoint-*/
