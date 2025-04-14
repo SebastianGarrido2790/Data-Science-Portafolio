@@ -1,0 +1,31 @@
+name: churn-project-env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11.9
+  - pandas
+  - numpy
+  - matplotlib
+  - scikit-learn
+  - xgboost
+  - lightgbm
+  - catboost
+  - pyyaml
+  - joblib
+  - jupyter
+  - jupyterlab
+  - ipywidgets
+  - notebook
+  - ipython
+  - seaborn
+  - scipy
+  - statsmodels
+  - mlflow
+  - sentence-transformers
+  - transformers  # For Hugging Face summarization
+  - pip
+  - pip:
+    - openai
+    - python-dotenv
+    - pydantic_settings
