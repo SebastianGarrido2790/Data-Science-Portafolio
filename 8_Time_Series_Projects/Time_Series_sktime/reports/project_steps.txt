@@ -1,0 +1,195 @@
+Context
+Retail dataset of a global superstore for 4 years.
+Perform EDA and Predict the sales of the next 30 days from the last date of the Training dataset!
+
+Content
+Time series analysis deals with time series based data to extract patterns for predictions and other characteristics of the data. 
+It uses a model for forecasting future values in a small time frame based on previous observations. 
+It is widely used for non-stationary data, such as economic data, weather data, stock prices, and retail sales forecasting.
+
+Preprocessing
+
+    Two to three years of data is good to capture nuances in trends of growing between sales of one year versus sales of another year.
+    (Timestamp('2015-01-03 00:00:00'), Timestamp('2018-12-30 00:00:00'))
+
+    Data Agreggation:
+
+    1. Consistency in Time Series Data
+        Single Observation per Time Unit: Forecasting models like AutoARIMA and Prophet require a consistent time series format, 
+        where each time unit (daily, in this case) has one associated value. This consistency allows the model to learn patterns over regular intervals.
+
+    2 Simplification of the Data
+        Reducing Complexity: Retail datasets often contain multiple transactions per day. 
+        By aggregating these transactions, you simplify the dataset into a clear sequence of daily sales, reducing the complexity inherent in transaction-level data.
+        Noise Reduction: Aggregation can help smooth out anomalies or random fluctuations present in individual transactions, making underlying trends and seasonal patterns more apparent.
+
+    3. Alignment with Business Objectives
+        Operational Insights: Often, business decisions and sales forecasts are made on a daily or weekly basis rather than on an individual transaction basis. 
+        Aggregating the data provides insights that are directly aligned with how sales performance is monitored and managed.
+
+    Preprocessed dataset, `df_ts`, is now correctly formatted for time series forecasting. What has been accomplished:
+
+    1. Columns & Data Types
+    - `order_date`: datetime64[ns] (Correct for time series)
+    - `sales`: float64 (Correct for forecasting)
+    
+    2. Data Range
+    - Starts: 2015-01-03
+    - Ends: 2018-12-30
+    - 4 years of daily sales data with 1230 records.
+
+    3. No Missing Values
+    - Both columns have 1230 non-null values, meaning there are no missing dates or sales figures.
+
+    Additionaly, let's group these different categories by the volume of data (low, mid and high). The higher volume data the better for forecasting since you can forecast past the noise and end up with lower error bars. 
+    This will also let us visualize the forecasts on similar scales so that we can figure out if timeseries modeling will work for the categories since timeseries highly depends on seasonal data of a certain variation (addtitive, multiplicative).
+
+    Data Ckeaning requirements
+        - Remove low-volume data that can't be predicted.
+        - Remove situations where there's not enough data. (i.e. by visual inspection or by number of '0' daily sales counts).
+        - Remove outliers (automated by calculating z-score and just removing it and having Prophet impute those values). This will remove the outliers near 0 for all categories.
+        - Check if more data needs to be removed after filtering. If not, then we can move throughout the pipeline.
+
+    Outlier Detection with Z-Score
+    
+    No rows were dropped in any category. This indicates that, according to the z-score threshold you set, the sales data for each category does not contain extreme outliers. 
+    It may be that the data distribution is relatively tight or that extreme sales values (if present) aren’t far enough from the mean when standardized.
+
+    Considerations:
+
+        - Threshold Review:
+          If you expect outliers (e.g., promotions, bulk orders) that might be important to model, consider whether a threshold of 2 is too strict. 
+          A higher threshold (like 3) could be tested if a less aggressive removal is desired.
+        - Business Context:
+          Verify that these “outliers” aren’t actually valid events (promotions, special orders) that you want to capture in the forecast. 
+          Removing them could sometimes remove meaningful variation.
+
+    Splitting Data by Volume (Low, Medium, High)
+
+        - Behavioral Differences:
+          By breaking the dataset into thirds, using percentiles (33rd and 66th) based on average daily sales, we’re assessing how different sales volume levels behave. 
+          Low-volume categories might be more volatile, while high-volume categories may exhibit smoother trends.
+
+        - Tailored Modeling:
+            - Low-Volume Categories:
+              These might be prone to more erratic behavior, potentially requiring different modeling approaches or even aggregation with similar low-volume subcategories.
+            - Medium/High-Volume Categories:
+              These tend to have more robust data and may yield more reliable forecasts with standard techniques.
+            - Data Quality Decisions:
+              This step helps you decide if:
+                - Some subcategories should be removed:
+                  If a category has too little data (or too many zero or near-zero days), it might not provide meaningful signals for forecasting.
+                - Temporal Splits Are Necessary:
+                  You might observe that certain periods (or subcategories) exhibit a shift in behavior. 
+                  For example, if low-volume categories change behavior after a specific date, you might choose to build separate models or exclude part of the data.
+
+Exploratory Data Analysis (EDA)
+
+    Steps:
+        1. Plot the time series (Sales over time)
+        2. Decompose the time series (Trend, seasonality, residuals)
+        3. Check for stationarity (Augmented Dickey-Fuller test)
+        4. Compute moving averages (Rolling window analysis)
+
+    Below is a summary of insights drawn from the EDA plots and the decomposition results:
+
+    1. Overall Trend
+        - Upward Movement: The decomposition’s trend component steadily rises from around 2015 to late 2018. This suggests an overall increase in sales over the four-year period.
+        - Magnitude of Increase: The trend line moves from roughly 1,000–1,500 in daily sales to around 2,000–2,500, indicating a noticeable growth trajectory.
+
+    2. Seasonality
+        - Annual Pattern (period=365): The seasonal component in the decomposition chart shows a repeating pattern across the years, but it’s relatively moderate in amplitude. 
+        - Possible Monthly or Quarterly Cycles: Although the decomposition was set to an annual frequency (period=365), the visible undulations may align with monthly or quarterly sales cycles—common in retail due to holidays or end-of-quarter purchasing. 
+
+    3. Spikes and Potential Outliers
+        - High Peaks: The daily sales time series shows several large spikes exceeding 10,000–20,000. These could be:
+        - Promotional Events: Discounts, Black Friday, Cyber Monday, or other sales campaigns.
+        - Bulk/Corporate Orders: Single large orders can cause sharp daily increases.
+        - Impact on Model: Spikes can heavily influence model training, so it’s worth examining these days more closely to see if they correspond to known events or if they’re genuine outliers (data errors).
+
+    4. Residuals (Decomposition)
+        - Random Distribution: The residuals appear scattered without a clear pattern, indicating that most systematic information (trend + seasonality) has been captured by the decomposition.
+        - Potential Heteroskedasticity: Some residual points are quite large, suggesting that variance might differ over time. Check if certain periods are more volatile than others.
+
+    5. Stationarity
+        - ADF Test: The ADF statistic is -5.76 with a p-value ≈ 5.67e-07, strongly suggesting the series is stationary in its current form.
+        - Implication for ARIMA: A stationary time series is suitable for ARIMA-based modeling without additional differencing. 
+        However, the upward trend in the decomposition might typically conflict with strict stationarity. 
+        It’s possible that the strong short-term fluctuations overshadow the longer-term trend in the ADF test.
+
+    Key Takeaways
+        1. Upward Sales Trend: Overall, sales have grown from 2015 to 2018.  
+        2. Moderate Seasonality: Repeated seasonal effects are present but not extremely pronounced.  
+        3. Promotional Spikes: Several days show exceptionally high sales, likely tied to promotions or large orders.  
+        4. Stationarity: Despite the trend, the ADF test indicates the series is statistically stationary.  
+
+Training Model
+
+    * To simplify the problem and reduce the complexity of the model, we will eliminate the low volume subcategory.
+
+    * It is possible to forecast a time series with freq=None, but it's not ideal because many forecasting models assume a regular frequency to work properly.
+      To make the time series regular, we'll resample it with a daily frequency and filling missing dates with zero sales. 
+      If a day is missing in the dataset, it likely means no transactions occurred, not that the data is incorrect.
+    
+    Define the Problem & Choose a Model (sktime)
+
+      We need to forecast sales based on past observations. Since this is a univariate time series, we can use models like:
+
+        - Naïve Forecaster (Baseline model)
+        - AutoARIMA (Captures trends & seasonality)
+        - Exponential Smoothing (ETS) (Good for trend & seasonal data)
+        - eXtreme Boosting Regressor (XGBoost) + sktime Pipeline (More flexible)
+      
+      Since we previously analyzed weekly and monthly seasonality, AutoARIMA or ETS would be strong choices.
+
+    * But first we predict on the available data (i.e., in-sample forecasting) helps evaluate the model's ability to capture trends and seasonality before making future forecasts.
+        Overall MAE: 1300.44
+        Overall MAPE (excluding zeros): 807.83%
+        In-sample MAE: 1224.46
+        Out-of-sample MAE: 1603.84
+        In-sample MAPE (excluding zeros): 863.85%
+        Out-of-sample MAPE (excluding zeros): 612.10%
+
+    * sktime_forecast function with Prophet is not showing good results.
+    Based on the validation results you provided for the Prophet model—MAE of 1829.35, RMSE of 2224.98, and an extraordinarily high MAPE of 1005.75%—it’s evident that the current forecasting approach is not performing well. 
+    A MAPE exceeding 1000% indicates that the model’s predictions are highly inaccurate relative to the actual values, suggesting that exploring alternative models could improve forecasting performance. 
+    Implementing XGBoost (Extreme Gradient Boosting) is a tree-based ensemble method that leverages gradient boosting to iteratively improve predictions. 
+    Unlike Prophet, which is designed specifically for time series with strong seasonal components and assumes a decomposable structure (trend + seasonality + holidays), 
+    XGBoost is a general-purpose regressor that can model non-linear relationships and interactions between features.
+
+    XGBoost
+    1. Data Preparation
+      Since XGBoost isn’t inherently designed for time series, we’ll need to engineer features from total_sales_df
+      Lag Features: Create columns representing past sales values, which serve as predictors. For example:
+      lag_1: Sales from 1 day ago
+      lag_7: Sales from 7 days ago (capturing weekly patterns)
+      lag_30: Sales from 30 days ago (capturing monthly patterns)
+      Choose lags based on data’s periodicity and domain knowledge.
+
+      Time-Based Features: Extract components from the date index to capture seasonality and trends:
+      Day of the week (e.g., 0 for Monday, 6 for Sunday)
+      Month (1–12)
+      Year (if your dataset spans multiple years)
+      Is_weekend (binary: 1 if Saturday/Sunday, 0 otherwise)
+
+      Rolling Statistics: Compute statistics over a moving window to capture trends and volatility:
+      Rolling mean (e.g., 7-day or 30-day average)
+      Rolling standard deviation (e.g., 7-day or 30-day)
+
+    2. Train-Test Split
+      For time series data, we must preserve chronological order. 
+      Split the data so the training set contains earlier data and the test set contains the last 30 days (matching our Prophet validation horizon).
+
+    3. Model Training
+      We'll use the XGBoost regressor and tune its hyperparameters to optimize performance.
+
+    4. Model Evaluation (cv=10)
+      We applied some improvements to the XGBoost model due the poor performance we had initially. 
+      The incorporations significantly enhanced its performance, reducing MAE from 1769.86 to 1362.02, RMSE from 2339.40 to 1630.89, and replacing an inflated MAPE of 1027.44% with a more meaningful SMAPE of 68.87%. 
+      These changes reflect better prediction accuracy and robustness. 
+      However, the flat forecasted sales and a still-high SMAPE indicate that the model could benefit from additional data (e.g., external factors) and techniques to better capture future trends and volatility. 
+      We could start by integrating future-known features and refining trend modeling to address the forecasting issue, and consider the other suggestions based on our resources and goals.
+
+    5. Forecasting
+      To predict the next 30 days beyond the dataset, we’ll need to iteratively generate features for future dates:
+      Use the last available data to predict day 1, then append that prediction to create features for day 2, and so on.
