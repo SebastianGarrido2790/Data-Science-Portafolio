@@ -15,6 +15,7 @@ Bienvenido a mi portafolio profesional de proyectos en ciencia de datos. Este re
 | [7. Accidentes de Tráfico en EE.UU](./7_Accidentes_de_Trafico_en_EEUU/) | Análisis geográfico, temporal y climático de más de 7M de accidentes. |
 | [8. Series Temporales](./8_Time_Series_Projects/) | Predicción de energía y ventas con XGBoost, Prophet y sktime. |
 | [9. Caso de estudio de Churn](./9_Caso_Estudio_Churn/) | Documento de Word donde se aplica metodologicamente el ciclo de vida de la ciencia de datos. |
+| [10. NYC Taxis Project](./10_NYC_Taxis_Project/) | Análisis exploratorio de viajes en taxi en NYC: patrones geográficos, temporales y económicos. |
 
 ## 🛠 Tecnologías
 
@@ -102,6 +103,24 @@ Bienvenido a mi portafolio profesional de proyectos en ciencia de datos. Este re
 ### 9. Análisis de Churn en Servicios de Streaming (Basado en Ciencia de Datos)
 
 **Descripción:** En este documento se muestra mi entendimiento de cómo un enfoque sistemático de la ciencia de datos puede transformar la toma de decisiones basada principalmente en la intuición en una estrategia basada en datos. Al documentar de forma estructurada el desarrollo de un modelo predictivo de la pérdida de clientes (churn), el objetivo es proporcionar información práctica para la optimización de estrategias de retención y mejorar el rendimiento y la competitividad de la empresa.
+
+### 10. NYC Taxis Project
+
+**Descripción:** Este proyecto analiza datos de viajes en taxi en la ciudad de Nueva York a través de un enfoque exploratorio. El proyecto sigue la estructura clásica de canalización de ML: ingesta → ingeniería de características → modelado → puntuación de lotes → panel de control.
+
+🔹 Problema empresarial 💼
+Creemos un modelo predictivo para pronosticar el número de viajes en taxi en Manhattan (Nueva York).
+- Paso 1. Obtener datos sin procesar.
+- Paso 2. Transformar los datos sin procesar en (características, objetivos) y dividirlos en entrenamiento y prueba.
+- Paso 3. Construir un modelo de línea base.
+- Paso 4. Mejorar la línea base utilizando ML.
+- Paso 5. Poner el modelo a trabajar con un arquitectura de tres pipelines, para construir un sistema de puntuación por lotes (batch-scoring system).
+- Paso 6. Construya un tablero de monitoreo.
+
+🔹 Aplicaciones potenciales:
+- Optimización de rutas para taxistas.
+- Análisis de demanda urbana.
+- Benchmark para políticas de movilidad sostenible.
 
 ## 📂 Estructura de Proyectos Complejos
 Algunos proyectos siguen la siguiente estructura para modularidad y reproducibilidad:
