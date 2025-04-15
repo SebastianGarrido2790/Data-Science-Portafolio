@@ -173,6 +173,6 @@ Algunos proyectos siguen la siguiente estructura para modularidad y reproducibil
 
 ---
 
-📧 **Contacto:** Si tienes alguna pregunta o sugerencia, no dudes en contactarme en [sebastiangarrido2790@gmail.com] o vía LinkedIn [www.linkedin.com/in/sebastían-garrido-638959320].
+📧 **Contacto:** Si tiene alguna pregunta o sugerencia, no dude en contactarme en [sebastiangarrido2790@gmail.com] o vía LinkedIn [www.linkedin.com/in/sebastían-garrido-638959320].
 
 ¡Gracias por visitar mi portafolio! 🎯
