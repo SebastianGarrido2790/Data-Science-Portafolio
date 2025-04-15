@@ -13,7 +13,7 @@ Bienvenido a mi portafolio profesional de proyectos en ciencia de datos. Este re
 | [5. Análisis de Sentimiento con Redes Neuronales](./5_Análisis_de_Sentimiento_con_Redes_Neuronales/) | Comparativa de modelos NN: FFNN, CNN, RNN, LSTM. |
 | [6. Análisis de Ventas – Superstore](./6_Análisis_de_Ventas_–_Superstore/) | Exploración de segmentos, productos y regiones para optimizar ventas. |
 | [7. Accidentes de Tráfico en EE.UU](./7_Accidentes_de_Trafico_en_EEUU/) | Análisis geográfico, temporal y climático de más de 7M de accidentes. |
-| [8. Series Temporales](./8_Time_Series/) | Predicción de energía y ventas con XGBoost, Prophet y sktime. |
+| [8. Series Temporales](./8_Time_Series_Projects/) | Predicción de energía y ventas con XGBoost, Prophet y sktime. |
 | [9. Caso de estudio de Churn](./9_Análisis_de_Churn_en_Servicios_de_Streaming_(Basado_en_Ciencia_de_Datos)/) | Documento de Word donde se aplica metodologicamente el ciclo de vida de la ciencia de datos. |
 
 ## 🛠 Tecnologías
