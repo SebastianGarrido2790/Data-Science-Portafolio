@@ -12,7 +12,7 @@ Bienvenido a mi portafolio profesional de proyectos en ciencia de datos. Este re
 | [4. Análisis de Sentimiento – Amazon Alexa](./4_Análisis_de_Sentimiento_–_Amazon_Alexa/) | Clasificación de reseñas con modelos BERT y XGBoost + API Flask. |
 | [5. Análisis de Sentimiento con Redes Neuronales](./5_NN_Sentiment_Analysis.ipynb) | Comparativa de modelos NN: FFNN, CNN, RNN, LSTM. |
 | [6. Análisis de Ventas – Superstore](./6_Superstore_Sales_Analysis.ipynb) | Exploración de segmentos, productos y regiones para optimizar ventas. |
-| [7. Accidentes de Tráfico en EE.UU.](./7_US_Traffic_Accidents.ipynb) | Análisis geográfico, temporal y climático de más de 7M de accidentes. |
+| [7. Accidentes de Tráfico en EE.UU](./7_US_Traffic_Accidents.ipynb) | Análisis geográfico, temporal y climático de más de 7M de accidentes. |
 | [8. Series Temporales](./8_Time_Series/) | Predicción de energía y ventas con XGBoost, Prophet y sktime. |
 | [9. Caso de estudio de Churn](./9_Análisis_de_Churn_en_Servicios_de_Streaming_(Basado_en_Ciencia_de_Datos)/) | Documento de Word donde se aplica metodologicamente el ciclo de vida de la ciencia de datos. |
 
