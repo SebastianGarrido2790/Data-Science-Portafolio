@@ -87,28 +87,28 @@ This project aims to predict customer churn by incorporating both structured dat
 ## Installation
 
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/SebastianGarrido2790/churn-project.git
-   cd churn-project
-   ```
+```bash
+git clone https://github.com/SebastianGarrido2790/churn-project.git
+cd churn-project
+```
 
 2. **Setup the Conda environment:**
-   ```bash
-   conda env create -f environment.yml
-   conda activate churn-project-env
-   ```
+```bash
+conda env create -f environment.yml
+conda activate churn-project-env
+```
 
 3. **Install additional Python packages:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 4. **Configure Environment Variables:**
 
-   Create a `.env` file in the root directory and add your API keys if using OpenAI:
-   ```dotenv
-   OPENAI_API_KEY=your_openai_api_key
-   ```
+Create a `.env` file in the root directory and add your API keys if using OpenAI:
+```dotenv
+OPENAI_API_KEY=your_openai_api_key
+```
 
 ---
 
@@ -194,7 +194,7 @@ This ensures that all key steps, from data processing to model evaluation, are t
 
 ## License
 
-This project is licensed under the terms of the [LICENSE](./LICENSE) file. Ensure you comply with the licensing agreements when using or modifying the code.
+This project is licensed under the terms of the [LICENSE](./LICENSE.txt) file. Ensure you comply with the licensing agreements when using or modifying the code.
 
 ---
 
@@ -203,8 +203,6 @@ This project is licensed under the terms of the [LICENSE](./LICENSE) file. Ensur
 This project integrates state-of-the-art AI methods for text summarization and embeddings, leveraging libraries from Hugging Face, OpenAI, and the broader Python ecosystem for data science and machine learning.
 
 ---
-
-For any further questions or contributions, please refer to the [contribution guidelines](CONTRIBUTING.md) or open an issue on GitHub.
 
 ## Contact
 
