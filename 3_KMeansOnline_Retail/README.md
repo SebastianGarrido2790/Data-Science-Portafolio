@@ -1,4 +1,3 @@
-```markdown
 # Online Retail Customer Segmentation
 
 This project demonstrates how to use data science techniques—specifically, RFM (Recency, Frequency, Monetary) analysis and KMeans clustering—to segment customers of an online retail business. The insights derived from this analysis can be used to drive customer-centric marketing strategies.
@@ -30,7 +29,7 @@ The final goal is to provide actionable insights into customer segments that can
 
 ## Project Structure
 
-```
+```plaintext
 ├── LICENSE
 ├── README.md                    <- This file.
 ├── data
@@ -75,23 +74,23 @@ The project uses the **Online Retail II** dataset containing transactions for a 
 
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/SebastianGarrido2790/online-retail-customer-segmentation.git
-   cd online-retail-customer-segmentation
-   ```
+```bash
+git clone https://github.com/SebastianGarrido2790/online-retail-customer-segmentation.git
+cd online-retail-customer-segmentation
+```
 
 2. **Create and activate a virtual environment (optional but recommended):**
 
-   ```bash
-   python -m venv env
-   env\Scripts\activate  # On Mac source env/bin/activate
-   ```
+```bash
+python -m venv env
+env\Scripts\activate  # On Mac source env/bin/activate
+```
 
 3. **Install required packages:**
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
