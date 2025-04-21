@@ -109,13 +109,13 @@ Bienvenido a mi portafolio profesional de proyectos en ciencia de datos. Este re
 **Descripción:** Este proyecto analiza datos de viajes en taxi en la ciudad de Nueva York a través de un enfoque exploratorio. El proyecto sigue la estructura clásica de canalización de ML: ingesta → ingeniería de características → modelado → puntuación de lotes → panel de control.
 
 🔹 Problema empresarial 💼
-Creemos un modelo predictivo para pronosticar el número de viajes en taxi en Manhattan (Nueva York).
+Creamos un modelo predictivo para pronosticar el número de viajes en taxi en Manhattan (Nueva York).
 - Paso 1. Obtener datos sin procesar.
 - Paso 2. Transformar los datos sin procesar en (características, objetivos) y dividirlos en entrenamiento y prueba.
 - Paso 3. Construir un modelo de línea base.
 - Paso 4. Mejorar la línea base utilizando ML.
 - Paso 5. Poner el modelo a trabajar con un arquitectura de tres pipelines, para construir un sistema de puntuación por lotes (batch-scoring system).
-- Paso 6. Construya un tablero de monitoreo.
+- Paso 6. Construir un tablero de monitoreo.
 
 🔹 Aplicaciones potenciales:
 - Optimización de rutas para taxistas.
