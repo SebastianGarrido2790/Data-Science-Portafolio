@@ -105,10 +105,11 @@ Welcome to my professional data science project portfolio. This repository prese
 ### 9. Churn Case Study
 **Summary:** Comprehensive case study demonstrating the application of the complete data science lifecycle to predict customer churn in streaming services, providing actionable insights for improving customer retention strategies. This is a six-month case study of customer churn for a streaming platform, similar to Netflix and Spotify, using real-world figures to simulate the industry's reality.
 
-🔹 Project Overview
+🔹 **Project Overview**
+
 This six-month data science project, conducted for StreamHub, Inc., a streaming platform with 10 million subscribers, aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month). Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
 
-🔹 Phase 1: Business Understanding (June 2025)
+🔹 **Phase 1: Business Understanding (June 2025)**
 - Objective: Define the churn problem and align on business goals.  
 - Key Activities:  
    - Established SMART goals: Reduce churn by 10% within six months, achieve AUC-ROC ≥ 0.85.  
@@ -117,7 +118,7 @@ This six-month data science project, conducted for StreamHub, Inc., a streaming 
 - Outcome: Validated problem statement: “Predict churn to enable retention strategies, saving $500,000/month.” Project plan with milestones and ethical guardrails (GDPR compliance).  
 - Impact: Grounded technical work in business priorities, ensuring stakeholder buy-in.
 
-🔹 Phase 2: Data Understanding and Governance (July 2025)
+🔹 **Phase 2: Data Understanding and Governance (July 2025)**
 - Objective: Assess data quality and suitability for churn prediction.  
 - Key Activities:  
    - Identified datasets: user demographics, viewing history, subscription details, customer interactions (10M users, ~6GB).  
@@ -126,7 +127,7 @@ This six-month data science project, conducted for StreamHub, Inc., a streaming 
 - Outcome: Data Assessment Report documenting sources, quality scores, and GDPR-compliant governance.  
 - Impact: Established a reliable data foundation, critical for predictive modeling.
 
-🔹 Phase 3: Exploratory Data Analysis & Insight Generation (August 2025)
+🔹 **Phase 3: Exploratory Data Analysis & Insight Generation (August 2025)**
 - Objective: Uncover patterns and test hypotheses to guide modeling.  
 - Key Activities:  
    - Conducted univariate, bivariate, multivariate, and time-series analyses (e.g., January churn spikes at 6.5%).  
@@ -135,7 +136,7 @@ This six-month data science project, conducted for StreamHub, Inc., a streaming 
 - Outcome: EDA Report with prioritized features (e.g., weekly_watch_time, inactive_30_days) and refined problem statement emphasizing temporal patterns.  
 - Impact: Provided actionable insights (e.g., target inactive users), shaping retention strategies.
 
-🔹 Phase 4: Data Preparation & Feature Engineering (September 2025)
+🔹 **Phase 4: Data Preparation & Feature Engineering (September 2025)**
 - Objective: Transform raw data into a clean, feature-rich dataset.  
 - Key Activities:  
    - Cleaned data: Imputed missing values (e.g., median for age), removed duplicates (0.05%), capped outliers.  
@@ -144,7 +145,7 @@ This six-month data science project, conducted for StreamHub, Inc., a streaming 
 - Outcome: Clean dataset (10M rows, 15 features) in AWS Feature Store, with Data Preparation Report.  
 - Impact: Ensured scalable, reproducible data ready for modeling, enhancing efficiency.
 
-🔹 Phase 5: Modeling & Experimentation (October 2025)
+🔹 **Phase 5: Modeling & Experimentation (October 2025)**
 - Objective: Develop and validate predictive models.  
 - Key Activities:  
    - Framed as binary classification, using weighted log-loss to prioritize churners.  
@@ -154,7 +155,7 @@ This six-month data science project, conducted for StreamHub, Inc., a streaming 
 - Outcome: Model Development Report with shortlisted models (XGBoost primary, LightGBM backup) and ethical evaluations.  
 - Impact: Delivered a high-performing, transparent model aligned with business KPIs (70% churner identification).
 
-🔹 Phase 6: Model Evaluation & Business Review (November 1–15, 2025)
+🔹 **Phase 6: Model Evaluation & Business Review (November 1–15, 2025)**
 - Objective: Validate model performance and business value.  
 - Key Activities:  
    - Evaluated XGBoost on test set: AUC-ROC = 0.85, recall = 0.74, identifying 74% of churners.  
@@ -164,7 +165,7 @@ This six-month data science project, conducted for StreamHub, Inc., a streaming 
 - Outcome: Model Evaluation and Business Case Report, approving deployment with risk mitigations (e.g., threshold tuning).  
 - Impact: Quantified ROI and ensured stakeholder trust, justifying deployment.
 
-🔹 Phase 7: Deployment & MLOps (November 16–30, 2025)
+🔹 **Phase 7: Deployment & MLOps (November 16–30, 2025)**
 - Objective: Operationalize the model with reliability and scalability.  
 - Key Activities:  
    - Deployed XGBoost as a real-time FastAPI endpoint on AWS ECS (150ms latency, 10M predictions/month).  
