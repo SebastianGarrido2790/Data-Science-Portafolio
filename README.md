@@ -190,7 +190,7 @@ Selected projects adopt a modular and reproducible structure, as follows:
 ## 🚀 How to Use This Repository
 1. Clone the repository:
    ```bash
-   git clone https://github.com/SebastianGarrido2790/portafolio_ciencia_datos.git
+   git clone https://github.com/SebastianGarrido2790/Data-Science-Portafolio.git
    ```
 2. Install the required dependencies:
    ```bash
