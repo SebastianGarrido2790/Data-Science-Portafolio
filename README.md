@@ -14,7 +14,7 @@ Welcome to my professional data science project portfolio. This repository prese
 | [6. Superstore Sales Analysis](./6_Análisis_de_Ventas_–_Superstore/) | Sales and profitability analysis across customer segments, product categories, and regions. |
 | [7. U.S. Traffic Accidents](./7_Accidentes_de_Trafico_en_EEUU/) | Geospatial, temporal, and meteorological analysis of over 7 million traffic accidents. |
 | [8. Time Series Projects](./8_Time_Series_Projects/) | Forecasting of energy consumption and sales using XGBoost, Prophet, and sktime. |
-| [9. Churn Case Study](./9_Caso_Estudio_Churn/) | Comprehensive case study applying the full data science lifecycle to customer churn prediction. |
+| [9. Churn Case Study](./9_Caso_Estudio_Churn/) | Comprehensive case study applying an end-to-end data science lifecycle to customer churn prediction. |
 | [10. NYC Taxis Project](./10_NYC_Taxis_Project/) | Exploratory analysis of NYC taxi ride patterns from a business intelligence perspective. |
 
 ## 🛠 Technologies
@@ -103,11 +103,7 @@ Welcome to my professional data science project portfolio. This repository prese
 - Feature-enriched XGBoost forecasting
 
 ### 9. Churn Case Study
-**Summary:** Comprehensive case study demonstrating the application of the complete data science lifecycle to predict customer churn in streaming services, providing actionable insights for improving customer retention strategies. This is a six-month case study of customer churn for a streaming platform, similar to Netflix and Spotify, using real-world figures to simulate the industry's reality.
-
-🔹 **Project Overview**
-
-For this six-month data science project, we created a fictional company, StreamHub, Inc., a streaming platform with 10 million subscribers, to conduct a case study aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month). Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
+**Summary:** For this six-month project, we created a fictional company, StreamHub, Inc., a streaming platform with 10 million subscribers similar to Netflix and Spotify, using real-world figures to simulate the industry's reality. The objective is to conduct a case study aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month) applying a complete data science lifecycle. Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
 
 🔹 **Phase 1: Business Understanding (June 2025)**
 - Established SMART goals: Reduce churn by 10% within six months, achieve AUC-ROC ≥ 0.85.  
