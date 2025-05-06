@@ -107,74 +107,46 @@ Welcome to my professional data science project portfolio. This repository prese
 
 🔹 **Project Overview**
 
-This six-month data science project, conducted for StreamHub, Inc., a streaming platform with 10 million subscribers, aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month). Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
+For this six-month data science project, we created a fictional company, StreamHub, Inc., a streaming platform with 10 million subscribers, to conduct a case study aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month). Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
 
 🔹 **Phase 1: Business Understanding (June 2025)**
-- Objective: Define the churn problem and align on business goals.  
-- Key Activities:  
-   - Established SMART goals: Reduce churn by 10% within six months, achieve AUC-ROC ≥ 0.85.  
-   - Formulated hypotheses (e.g., low engagement predicts churn).  
-   - Engaged stakeholders (marketing, executives) via bi-weekly meetings.
-- Outcome: Validated problem statement: “Predict churn to enable retention strategies, saving $500,000/month.” Project plan with milestones and ethical guardrails (GDPR compliance).  
-- Impact: Grounded technical work in business priorities, ensuring stakeholder buy-in.
+- Established SMART goals: Reduce churn by 10% within six months, achieve AUC-ROC ≥ 0.85.  
+- Formulated hypotheses (e.g., low engagement predicts churn).  
+- Engaged stakeholders (marketing, executives) via bi-weekly meetings.
 
-🔹 **Phase 2: Data Understanding and Governance (July 2025)**
-- Objective: Assess data quality and suitability for churn prediction.  
-- Key Activities:  
-   - Identified datasets: user demographics, viewing history, subscription details, customer interactions (10M users, ~6GB).  
-   - Evaluated quality: 92% completeness, 99% accuracy, with minor missing values (e.g., 5% in age).  
-   - Confirmed temporal components (e.g., timestamps for seasonality).
-- Outcome: Data Assessment Report documenting sources, quality scores, and GDPR-compliant governance.  
-- Impact: Established a reliable data foundation, critical for predictive modeling.
+🔹 **Phase 2: Data Understanding and Governance (July 2025)** 
+- Identified datasets: user demographics, viewing history, subscription details, customer interactions (10M users, ~6GB).  
+- Evaluated quality: 92% completeness, 99% accuracy, with minor missing values (e.g., 5% in age).  
+- Confirmed temporal components (e.g., timestamps for seasonality).
 
 🔹 **Phase 3: Exploratory Data Analysis & Insight Generation (August 2025)**
-- Objective: Uncover patterns and test hypotheses to guide modeling.  
-- Key Activities:  
-   - Conducted univariate, bivariate, multivariate, and time-series analyses (e.g., January churn spikes at 6.5%).  
-   - Tested seven hypotheses, confirming predictors like low watch_time (7% churn rate) and inactivity (10% churn rate).  
-   - Visualized findings (heatmaps, box plots, time-series plots).
-- Outcome: EDA Report with prioritized features (e.g., weekly_watch_time, inactive_30_days) and refined problem statement emphasizing temporal patterns.  
-- Impact: Provided actionable insights (e.g., target inactive users), shaping retention strategies.
+- Conducted univariate, bivariate, multivariate, and time-series analyses (e.g., January churn spikes at 6.5%).  
+- Tested seven hypotheses, confirming predictors like low watch_time (7% churn rate) and inactivity (10% churn rate).  
+- Visualized findings (heatmaps, box plots, time-series plots).
 
 🔹 **Phase 4: Data Preparation & Feature Engineering (September 2025)**
-- Objective: Transform raw data into a clean, feature-rich dataset.  
-- Key Activities:  
-   - Cleaned data: Imputed missing values (e.g., median for age), removed duplicates (0.05%), capped outliers.  
-   - Engineered 10 features (e.g., inactive_30_days, plan_downgrade_flag) based on EDA.  
-   - Automated preprocessing pipelines (scikit-learn, Airflow) and used time-based train/test split (Jan 2023–Apr 2025 vs. May–Jun 2025).
-- Outcome: Clean dataset (10M rows, 15 features) in AWS Feature Store, with Data Preparation Report.  
-- Impact: Ensured scalable, reproducible data ready for modeling, enhancing efficiency.
+- Cleaned data: Imputed missing values (e.g., median for age), removed duplicates (0.05%), capped outliers.  
+- Engineered 10 features (e.g., inactive_30_days, plan_downgrade_flag) based on EDA.  
+- Automated preprocessing pipelines (scikit-learn, Airflow) and used time-based train/test split (Jan 2023–Apr 2025 vs. May–Jun 2025).
 
 🔹 **Phase 5: Modeling & Experimentation (October 2025)**
-- Objective: Develop and validate predictive models.  
-- Key Activities:  
-   - Framed as binary classification, using weighted log-loss to prioritize churners.  
-   - Tested algorithms (Logistic Regression, Random Forest, XGBoost, LightGBM) with MLflow tracking.  
-   - Achieved AUC-ROC = 0.86 (XGBoost) and recall = 0.75 via Bayesian optimization.  
-   - Ensured interpretability (SHAP/LIME) and fairness (5% demographic parity).
-- Outcome: Model Development Report with shortlisted models (XGBoost primary, LightGBM backup) and ethical evaluations.  
-- Impact: Delivered a high-performing, transparent model aligned with business KPIs (70% churner identification).
+- Framed as binary classification, using weighted log-loss to prioritize churners.  
+- Tested algorithms (Logistic Regression, Random Forest, XGBoost, LightGBM) with MLflow tracking.  
+- Achieved AUC-ROC = 0.86 (XGBoost) and recall = 0.75 via Bayesian optimization.  
+- Ensured interpretability (SHAP/LIME) and fairness (5% demographic parity).
 
 🔹 **Phase 6: Model Evaluation & Business Review (November 1–15, 2025)**
-- Objective: Validate model performance and business value.  
-- Key Activities:  
-   - Evaluated XGBoost on test set: AUC-ROC = 0.85, recall = 0.74, identifying 74% of churners.  
-   - Conducted cost-benefit analysis: $370,000/month savings, $2.93M/year net ROI (166%).  
-   - Performed error analysis: 38,120 false positives ($190,600/month cost), 26,000 false negatives ($260,000/month).  
-   - Presented to stakeholders, securing go decision.
-- Outcome: Model Evaluation and Business Case Report, approving deployment with risk mitigations (e.g., threshold tuning).  
-- Impact: Quantified ROI and ensured stakeholder trust, justifying deployment.
+- Evaluated XGBoost on test set: AUC-ROC = 0.85, recall = 0.74, identifying 74% of churners.  
+- Conducted cost-benefit analysis: $370,000/month savings, $2.93M/year net ROI (166%).  
+- Performed error analysis: 38,120 false positives ($190,600/month cost), 26,000 false negatives ($260,000/month).  
+- Presented to stakeholders, securing go decision.
 
 🔹 **Phase 7: Deployment & MLOps (November 16–30, 2025)**
-- Objective: Operationalize the model with reliability and scalability.  
-- Key Activities:  
-   - Deployed XGBoost as a real-time FastAPI endpoint on AWS ECS (150ms latency, 10M predictions/month).  
-   - Containerized (Docker) and integrated with CI/CD (GitHub Actions).  
-   - Connected to Salesforce and Braze for campaign automation.  
-   - Set up monitoring (CloudWatch, Streamlit dashboard) and quarterly retraining.  
-   - Conducted training and post-deployment review.
-- Outcome: Deployed API, monitoring dashboard, documentation, and Post-Deployment Review Report.  
-- Impact: Enabled real-time churn predictions, supporting $370,000/month savings and long-term scalability.
+- Deployed XGBoost as a real-time FastAPI endpoint on AWS ECS (150ms latency, 10M predictions/month).  
+- Containerized (Docker) and integrated with CI/CD (GitHub Actions).  
+- Connected to Salesforce and Braze for campaign automation.  
+- Set up monitoring (CloudWatch, Streamlit dashboard) and quarterly retraining.  
+- Conducted training and post-deployment review.
 
 ### 10. NYC Taxis Project
 **Summary:** Conducted an end-to-end exploratory data analysis of NYC taxi rides, following a full ML pipeline to deliver actionable business insights.
