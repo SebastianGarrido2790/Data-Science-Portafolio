@@ -3,13 +3,21 @@
 This Python script automates the summarization of multiple PDF files using large language models (LLMs) from OpenAI (GPT-3.5-turbo) or Anthropic (Claude-3.5-Haiku-latest). It processes all PDFs in a specified directory, generates summaries, and saves them to a customizable output file in either text or JSON format. Here's a brief overview of how it works:
 
 **1. Configuration**: Loads environment variables (API keys, default model) from a `.env` file using `python-dotenv`.
+
 **2. Command-Line Arguments**: Parses user inputs for model selection (`openai` or `anthropic`), PDF directory, output file name, and output format (`text` or `json`) using argparse.
+
 **3. PDF Processing**: Scans the specified directory for `.pdf` files and processes each one using `PyPDFLoader` to extract text.
+
 **4. Summarization**: Uses LangChain's `map_reduce` summarization chain to generate summaries with the chosen LLM, handling errors gracefully.
+
 **5. Output Saving**:
+
 **6. Text Format**: Appends each summary to a `.txt` file with headers and separators.
+
 **7. JSON Format**: Collects summaries in a dictionary and saves them as a `.json` file.
+
 **8. Error Handling**: Captures and reports issues (e.g., invalid PDFs) without stopping the process.
+
 **9. Console Feedback**: Prints progress, summaries, and the final output file location.
 
 The script is flexible, allowing customization of the model, directory, output file, and format, with summaries saved to a user-specified file for easy access.
