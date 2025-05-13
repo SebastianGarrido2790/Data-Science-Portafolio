@@ -43,12 +43,12 @@ Alternatively, install the required packages manually:
 pip install langchain openai anthropic pypdf python-dotenv
 ```
 
-- Packages and Versions:
-    - `langchain==0.2.16`: For the summarization chain and document loading utilities.
-    - `openai==1.35.13`: For accessing OpenAI's GPT-3.5-turbo model.
-    - `anthropic==0.28.0`: For accessing Anthropic's Claude-3.5-Haiku-latest model.
-    - `pypdf==4.2.0`: For reading and parsing PDF files.
-    - `python-dotenv==1.0.1`: For loading environment variables from a .env file.
+Packages and Versions:
+- `langchain==0.2.16`: For the summarization chain and document loading utilities.
+- `openai==1.35.13`: For accessing OpenAI's GPT-3.5-turbo model.
+- `anthropic==0.28.0`: For accessing Anthropic's Claude-3.5-Haiku-latest model.
+- `pypdf==4.2.0`: For reading and parsing PDF files.
+- `python-dotenv==1.0.1`: For loading environment variables from a .env file.
 
 **3. Configure Environment Variables:** Create a `.env` file in the project root with the following content:
 ```plain
