@@ -1,36 +1,26 @@
 # PDF Summarization Script
 
-This Python script automates the summarization of multiple PDF files using large language models (LLMs) from OpenAI (GPT-3.5-turbo) or Anthropic (Claude-3.5-Haiku-latest). It processes all PDFs in a specified directory, generates summaries, and saves them to a customizable output file in either text or JSON format. Here's a brief overview of how it works:
-
-**1. Configuration**: Loads environment variables (API keys, default model) from a `.env` file using `python-dotenv`.
-**2. Command-Line Arguments**: Parses user inputs for model selection (`openai` or `anthropic`), PDF directory, output file name, and output format (`text` or `json`) using argparse.
-**3. PDF Processing**: Scans the specified directory for `.pdf` files and processes each one using `PyPDFLoader` to extract text.
-**4. Summarization**: Uses LangChain's `map_reduce` summarization chain to generate summaries with the chosen LLM, handling errors gracefully.
-**5. Output Saving**:
-**6. Text Format**: Appends each summary to a `.txt` file with headers and separators.
-**7. JSON Format**: Collects summaries in a dictionary and saves them as a `.json` file.
-**8. Error Handling**: Captures and reports issues (e.g., invalid PDFs) without stopping the process.
-**9. Console Feedback**: Prints progress, summaries, and the final output file location.
-
-The script is flexible, allowing customization of the model, directory, output file, and format, with summaries saved to a user-specified file for easy access.
+This Python script automates the summarization of multiple PDF files using large language models (LLMs) from OpenAI (GPT-3.5-turbo) or Anthropic (Claude-3.5-Haiku-latest). It processes all PDFs in a specified directory, generates summaries, and saves them to a customizable output file in either text or JSON format. The script is flexible, allowing customization of the model, directory, output file, and format, with summaries saved to a user-specified file for easy access.
 
 ## Features
 
-- **Batch PDF Processing**: Summarizes all PDF files in a specified directory.
+- **Configuration**: Loads environment variables (API keys, default model) from a `.env` file using `python-dotenv`.
+- **Command-Line Arguments**: Parses user inputs for model selection (`openai` or `anthropic`), PDF directory, output file name, and output format (`text` or `json`) using argparse.
+- **PDF Processing**: Scans the specified directory for `.pdf` files and processes each one using `PyPDFLoader` to extract text.
 - **Model Selection**: Choose between OpenAI's `GPT-3.5-turbo` or Anthropic's `Claude-3.5-Haiku-latest` via command-line arguments or environment variables.
-- **Flexible Output**:
-    - Save summaries to a custom file name.
-    - Choose between text (`.txt`) or JSON (`.json`) output formats.
+- **Summarization**: Uses LangChain's `map_reduce` summarization chain to generate summaries with the chosen LLM, handling errors gracefully.
+- **Flexible Output**: Save summaries to a custom file name:
+    - **Text Format**: Appends each summary to a `.txt` file with headers and separators.
+    - **JSON Format**: Collects summaries in a dictionary and saves them as a `.json` file.
 - **Error Handling**: Gracefully handles errors (e.g., invalid PDFs) and includes error messages in the output.
-- **Configurable Directory**: Specify the directory containing PDFs to process.
-- **Environment Variable Support**: Configure default model selection via a `.env` file.
+- **Console Feedback**: Prints progress, summaries, and the final output file location.
 
 ## Requirements
 
 - Python 3.8+
-- Required Python packages (install via `pip`):
+- Required Python packages (install via `uv`):
 ```bash
-pip install langchain openai anthropic pypdf python-dotenv
+uv add langchain openai anthropic pypdf python-dotenv
 ```
 - API keys for OpenAI and/or Anthropic (depending on the model used).
 - PDF files to summarize.
@@ -39,26 +29,32 @@ pip install langchain openai anthropic pypdf python-dotenv
 
 **1. Clone the Repository (if applicable):**
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/SebastianGarrido2790/11_PDF_Summary_with_LLMs.git
+cd 11_PDF_Summary_with_LLMs
 ```
 
 **2. Install Dependencies:**
+- Initialize the project with `uv` (already done if you ran `uv init`)
 ```bash
-pip install -r requirements.txt
+uv init
 ```
 
-Alternatively, install the required packages manually:
+- Activate the virtual environment:
 ```bash
-pip install langchain openai anthropic pypdf python-dotenv
+.venv\Scripts\activate
 ```
 
-- Packages and Versions:
-    - `langchain==0.2.16`: For the summarization chain and document loading utilities.
-    - `openai==1.35.13`: For accessing OpenAI's GPT-3.5-turbo model.
-    - `anthropic==0.28.0`: For accessing Anthropic's Claude-3.5-Haiku-latest model.
-    - `pypdf==4.2.0`: For reading and parsing PDF files.
-    - `python-dotenv==1.0.1`: For loading environment variables from a .env file.
+- Install dependencies using `uv`:
+```bash
+uv add langchain openai anthropic pypdf python-dotenv
+```
+
+Packages and Versions:
+- `langchain==0.2.16`: For the summarization chain and document loading utilities.
+- `openai==1.35.13`: For accessing OpenAI's GPT-3.5-turbo model.
+- `anthropic==0.28.0`: For accessing Anthropic's Claude-3.5-Haiku-latest model.
+- `pypdf==4.2.0`: For reading and parsing PDF files.
+- `python-dotenv==1.0.1`: For loading environment variables from a .env file.
 
 **3. Configure Environment Variables:** Create a `.env` file in the project root with the following content:
 ```plain
@@ -145,7 +141,7 @@ The report covers advancements in renewable energy technologies.
 
 ## Troubleshooting
 
-- **ModuleNotFoundError**: Ensure all dependencies are installed (`pip install -r requirements.txt`).
+- **ModuleNotFoundError**: Ensure all dependencies are installed (`uv add langchain openai anthropic pypdf python-dotenv`).
 - **Authentication Errors**: Verify that API keys in `.env` are correct and match the selected model.
 - **No PDFs Found**: Check that the specified directory contains `.pdf` files and the path is correct.
 - **Invalid PDF**: If a PDF fails to process, the error will be included in the output, and other PDFs will still be processed.
