@@ -7,10 +7,15 @@ requires-python = ">=3.10"
 dependencies = [
     "pandas>=2.0.0",
     "numpy>=1.24.0",
-    "scikit-learn>=1.2.0",
+    "scikit-learn>=1.2.0",  # Base scikit-learn, will be accelerated with cuML
     "matplotlib>=3.7.0",
     "seaborn>=0.12.0",
-    "jupyter>=1.0.0"
+    "jupyter>=1.0.0",
+    "mlflow>=2.0.0",       # For experiment tracking
+    "xgboost>=1.6.0",      # For XGBoost model
+    "shap>=0.41.0",        # For interpretability (SHAP values)
+    "imbalanced-learn>=0.10.0",  # For SMOTE (imblearn)
+    "joblib>=1.2.0",       # For model saving
 ]
 
 [tool.uv]
