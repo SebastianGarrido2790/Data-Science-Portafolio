@@ -114,10 +114,10 @@ X_train_df = pd.DataFrame(X_train_processed, columns=feature_names)
 X_test_df = pd.DataFrame(X_test_processed, columns=feature_names)
 
 # Step 7: Save processed data
-X_train_df.to_csv("data/processed/X_train.csv", index=False)
-X_test_df.to_csv("data/processed/X_test.csv", index=False)
-y_train.to_csv("data/processed/y_train.csv", index=False)
-y_test.to_csv("data/processed/y_test.csv", index=False)
+X_train_df.to_csv("../../data/processed/X_train.csv", index=False)
+X_test_df.to_csv("../../data/processed/X_test.csv", index=False)
+y_train.to_csv("../../data/processed/y_train.csv", index=False)
+y_test.to_csv("../../data/processed/y_test.csv", index=False)
 
 print("Processed data saved to data/processed/")
 print("X_train shape:", X_train_df.shape)
