@@ -1,0 +1,21 @@
+[project]
+name = "employee-attrition"
+version = "0.1.0"
+description = "Machine learning project to predict employee attrition using IBM HR Analytics dataset"
+authors = [{ name = "Sebastian Garrido", email = "sebastiangarrido2790@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+    "scikit-learn>=1.2.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "jupyter>=1.0.0"
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0"
+]
