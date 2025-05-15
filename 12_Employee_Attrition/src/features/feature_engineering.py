@@ -26,10 +26,10 @@ df["SatisfactionScore"] = df[
     ["JobSatisfaction", "EnvironmentSatisfaction", "RelationshipSatisfaction"]
 ].mean(axis=1)
 
-# Age Bins
+# Age Bins (Cleaned names)
 df["AgeGroup"] = pd.cut(
-    df["Age"], bins=[0, 30, 40, 100], labels=["<30", "30-40", ">40"]
-)
+    df["Age"], bins=[0, 30, 40, 100], labels=["lt30", "30-40", "gt40"]
+).astype(str)
 
 # Income-to-Level Ratio
 df["IncomeToLevelRatio"] = df["MonthlyIncome"] / df["JobLevel"]
@@ -84,6 +84,18 @@ categorical_cols = [
     "AgeGroup",
 ]
 
+
+# Custom function to clean feature names (XGBoost’s requirements)
+def clean_feature_names(transformer, feature_names):
+    """
+    Clean features to meet XGBoost’s requirement that feature names be strings without [, ], <, or >.
+    """
+    return [
+        name.replace("[", "").replace("]", "").replace("<", "").replace(">", "")
+        for name in feature_names
+    ]
+
+
 # Preprocessing pipeline
 preprocessor = ColumnTransformer(
     transformers=[
@@ -95,30 +107,30 @@ preprocessor = ColumnTransformer(
 # Full pipeline
 pipeline = Pipeline(steps=[("preprocessor", preprocessor)])
 
-# Step 5: Split data
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y, random_state=42
-)
-
-# Step 6: Apply pipeline
-X_train_processed = pipeline.fit_transform(X_train)
-X_test_processed = pipeline.transform(X_test)
-
-# Convert processed data back to DataFrame for storage
-feature_names = numerical_cols + list(
+# Fit and transform with clean names
+X_processed = pipeline.fit_transform(X)
+feature_names = numerical_cols + clean_feature_names(
+    preprocessor.named_transformers_["cat"],
     pipeline.named_steps["preprocessor"]
     .named_transformers_["cat"]
-    .get_feature_names_out(categorical_cols)
+    .get_feature_names_out(categorical_cols),
 )
-X_train_df = pd.DataFrame(X_train_processed, columns=feature_names)
-X_test_df = pd.DataFrame(X_test_processed, columns=feature_names)
+X_df = pd.DataFrame(X_processed, columns=feature_names)
 
-# Step 7: Save processed data
-X_train_df.to_csv("../../data/processed/X_train.csv", index=False)
-X_test_df.to_csv("../../data/processed/X_test.csv", index=False)
+# Step 5: Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X_df, y, test_size=0.2, stratify=y, random_state=42
+)
+
+# Step 6: Save processed data
+X_train.to_csv("../../data/processed/X_train.csv", index=False)
+X_test.to_csv("../../data/processed/X_test.csv", index=False)
 y_train.to_csv("../../data/processed/y_train.csv", index=False)
 y_test.to_csv("../../data/processed/y_test.csv", index=False)
 
-print("Processed data saved to data/processed/")
-print("X_train shape:", X_train_df.shape)
-print("X_test shape:", X_test_df.shape)
+print("Processed data saved to ../../data/processed/")
+print("X_train shape:", X_train.shape)
+print("X_test shape:", X_test.shape)
+print("Sample feature names:", X_train.columns.tolist()[:5], "...")
+
+print(X_train.columns)
