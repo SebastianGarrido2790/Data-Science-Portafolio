@@ -18,7 +18,7 @@
 **Goal**: Track experiments systematically for reproducibility and comparison.
 - **Tool**: MLflow for tracking (logs in `mlruns/`). It’s lightweight, integrates with scikit-learn, and fits your project setup. Experiments are visible in the MLflow UI under `EmployeeAttritionExperiment`.
 ```bash
-    mlflow ui
+    mlflow ui --backend-store-uri file://C:/12_Employee_Attrition/src/features/mlruns
 ```
 - **Models (Latest Run)**:
   - **Logistic Regression (Threshold=0.4)**: Recall 0.8298, F1 0.3319, AUC 0.7750.
