@@ -4,6 +4,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
+import joblib
+import os
 import warnings
 
 warnings.filterwarnings("ignore")
@@ -117,6 +119,14 @@ feature_names = numerical_cols + clean_feature_names(
 )
 X_df = pd.DataFrame(X_processed, columns=feature_names)
 
+# Save the scaler
+scaler = pipeline.named_steps["preprocessor"].named_transformers_["num"]
+os.makedirs(
+    "../../models", exist_ok=True
+)  # Create models directory if it doesn't exist
+joblib.dump(scaler, "../../models/scaler.pkl")
+print("Scaler saved to ../../models/scaler.pkl")
+
 # Step 5: Split data
 X_train, X_test, y_train, y_test = train_test_split(
     X_df, y, test_size=0.2, stratify=y, random_state=42
@@ -132,5 +142,4 @@ print("Processed data saved to ../../data/processed/")
 print("X_train shape:", X_train.shape)
 print("X_test shape:", X_test.shape)
 print("Sample feature names:", X_train.columns.tolist()[:5], "...")
-
-print(X_train.columns)
+print("X_train columns:", X_train.columns)
