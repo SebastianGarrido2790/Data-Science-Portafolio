@@ -16,12 +16,15 @@
 
 ## Experimentation
 **Goal**: Track experiments systematically for reproducibility and comparison.
-- **Tool**: MLflow for tracking (logs in `mlruns/`). It’s lightweight, integrates with scikit-learn, and fits your project setup.
-- **Models**:
-  - **Logistic Regression**: Recall 0.82, F1 0.76, AUC 0.85.
-  - **Random Forest**: Recall 0.79, F1 0.74, AUC 0.87.
-  - **XGBoost**: Recall 0.85, F1 0.78, AUC 0.89.
-- **Tuning**: Grid search with 5-fold stratified CV, SMOTE for imbalance.
+- **Tool**: MLflow for tracking (logs in `mlruns/`). It’s lightweight, integrates with scikit-learn, and fits your project setup. Experiments are visible in the MLflow UI under `EmployeeAttritionExperiment`.
+```bash
+    mlflow ui
+```
+- **Models (Latest Run)**:
+  - **Logistic Regression (Threshold=0.4)**: Recall 0.8298, F1 0.3319, AUC 0.7750.
+  - **Random Forest (Threshold=0.4)**: Recall 0.3404, F1 0.4267, AUC 0.7800.
+  - **XGBoost (Threshold=0.3)**: Recall 0.6596, F1 0.4218, AUC 0.7741.
+- **Tuning**: Grid search with 5-fold stratified CV, SMOTE for imbalance (sampling_strategy=0.7, class weights adjusted).
 
 ## Algorithm Selection and Experimentation
 **Goal**: Evaluate multiple algorithms, tune hyperparameters, and select the best model.
@@ -41,26 +44,36 @@
 
 ### Process:
 - **Cross-Validation**: Use 5-fold stratified cross-validation to account for class imbalance.
-- **Hyperparameter Tuning**: Apply grid search for key parameters (e.g., class weights, regularization).
-- **Class Imbalance**: Use `class_weight='balanced'` and SMOTE for oversampling the minority class.
+- **Hyperparameter Tuning**: Apply grid search for key parameters (e.g., class weights, regularization, learning rate, tree depth).
+- **Class Imbalance**: Use `class_weight` (e.g., {0: 1, 1: 5}) and SMOTE for oversampling the minority class.
+- **Threshold Adjustment**: Lowered decision thresholds (0.4 for LogisticRegression/RandomForest, 0.3 for XGBoost) to prioritize recall.
 - **Time Series**: Not applicable (confirmed in Step 2).
 
 ## Interpretability
-- **SHAP**: Top features for XGBoost: `OverTime`, `SatisfactionScore`, `DistanceFromHome`.
-- **Plot**: Saved in `reports/figures/shap_summary.png`.
+- **SHAP**:
+  - **Logistic Regression**: Top features identified (e.g., `OverTime`, `SatisfactionScore`, etc.). Plot saved in `reports/figures/shap_logistic_regression.png`.
+  - **Random Forest**: Top features identified (e.g., `DistanceFromHome`, `MonthlyIncome`, etc.). Plot saved in `reports/figures/shap_random_forest.png`.
+  - **XGBoost**: Top features: `OverTime`, `SatisfactionScore`, `DistanceFromHome`. Plot saved in `reports/figures/shap_xgboost.png`.
 
 ## Fairness
-- **Demographic Parity**: Male (0.18), Female (0.16) – minor disparity.
-- **Equalized Odds**: TPR 0.85, consistent across groups.
+- **Demographic Parity**: Male (0.08), Female (0.13) – slight disparity.
+- **Equalized Odds**: TPR 0.38 (based on XGBoost), consistent across groups but lower than desired.
 
 ## Ethical Considerations
 - No significant bias across `Gender`.
 - Ensure HR uses predictions for support, not punishment.
 
 ## Shortlisted Models
-- **XGBoost**: Best performance (Recall 0.85).
-- **Logistic Regression**: Best interpretability (Recall 0.82).
+- **Logistic Regression**: Achieves target recall (0.8298) but very low F1-score (0.3319), highly interpretable.
+- **XGBoost**: Below target recall (0.6596) in the latest run, needs further tuning to reach ≥0.80.
 
 ## Next Steps
-- Proceed to deployment (Step 6).
-- Finalize model choice with HR (performance vs. interpretability).
+- **Further Tuning for XGBoost**:
+  - **Dynamic Threshold**: Use precision-recall curve to find the optimal threshold for maximizing recall while improving F1-score.
+  - **Adjust `scale_pos_weight`**: Increase to 4.0 to further prioritize the minority class.
+  - **SMOTE Adjustment**: Test `sampling_strategy=0.5` to reduce noise from oversampling.
+  - **Hyperparameter Tuning**: Focus on smaller `learning_rate` (e.g., 0.01) and higher `n_estimators` (e.g., 800) for better learning stability.
+  - **Feature Selection**: Use SHAP insights to prioritize top features (`OverTime`, `SatisfactionScore`, `DistanceFromHome`) and reduce noise.
+- **Reconcile Performance**: Continue investigating why XGBoost performance dropped from previous best (Recall 0.85, F1 0.78, AUC 0.89).
+- **Finalize Model Choice**: Re-run with optimized parameters, then decide between XGBoost (performance) and Logistic Regression (interpretability) with HR.
+- **Proceed to Step 6**: Move to Model Evaluation & Business Review once recall and F1-score targets are consistently met.
