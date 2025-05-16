@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore")
 
 # Set MLflow tracking URI (adjust path to match your setup)
 mlflow.set_tracking_uri(
-    r"file:///C:/Users/sebas/Documents/Data_Science/Portfolio/Data-Science-Portfolio/12_Employee_Attrition/src/features/mlruns"
+    r"file:///C:/Users/.../12_Employee_Attrition/src/features/mlruns"
 )
 
 

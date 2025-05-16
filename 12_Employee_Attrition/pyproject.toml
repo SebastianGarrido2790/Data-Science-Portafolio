@@ -5,17 +5,19 @@ description = "Machine learning project to predict employee attrition using IBM 
 authors = [{ name = "Sebastian Garrido", email = "sebastiangarrido2790@gmail.com" }]
 requires-python = ">=3.10"
 dependencies = [
-    "pandas>=2.0.0",
-    "numpy>=1.24.0",
-    "scikit-learn>=1.2.0",  # Base scikit-learn, will be accelerated with cuML
+    "pandas>=2.2.2",
+    "numpy>=1.26.4",
+    "scikit-learn>=1.5.0",  
     "matplotlib>=3.7.0",
     "seaborn>=0.12.0",
     "jupyter>=1.0.0",
-    "mlflow>=2.0.0",       # For experiment tracking
-    "xgboost>=1.6.0",      # For XGBoost model
-    "shap>=0.41.0",        # For interpretability (SHAP values)
-    "imbalanced-learn>=0.10.0",  # For SMOTE (imblearn)
-    "joblib>=1.2.0",       # For model saving
+    "mlflow>=2.12.2",       
+    "xgboost>=2.0.3",      
+    "shap>=0.41.0",        
+    "imbalanced-learn>=0.10.0",
+    "joblib>=1.4.2",
+    "fastapi>=0.110.0",
+    "uvicorn>=0.29.0",
 ]
 
 [tool.uv]
@@ -24,3 +26,10 @@ dev-dependencies = [
     "black>=23.0.0",
     "isort>=5.0.0"
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app.py"]  # Explicitly include app.py in the root directory

@@ -1,0 +1,64 @@
+name: Deploy Employee Attrition Model
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test-batch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image (Batch)
+        run: docker build -f Dockerfile.batch -t employee-attrition-predictor-batch:latest .
+
+      - name: Run tests (Batch)
+        run: |
+          docker run --rm -v $(pwd)/data:/app/data employee-attrition-predictor-batch
+          if [ -f data/predictions/predictions.csv ]; then
+            echo "Batch predictions generated successfully"
+          else
+            echo "Batch prediction failed" && exit 1
+          fi
+
+      - name: Push to Docker Hub (Batch)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker tag employee-attrition-predictor-batch:latest ${{ secrets.DOCKER_USERNAME }}/employee-attrition-predictor-batch:v1.0.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/employee-attrition-predictor-batch:v1.0.0
+
+  build-and-test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image (API)
+        run: docker build -f Dockerfile.api -t employee-attrition-api:latest .
+
+      - name: Run tests (API)
+        run: |
+          docker run -d -p 8000:8000 --name api-test employee-attrition-api
+          sleep 5
+          curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" -d '{"Age": 35, "DailyRate": 1000, "DistanceFromHome": 5, "Education": 3, "EmployeeNumber": 1001, "EnvironmentSatisfaction": 3, "HourlyRate": 50, "JobInvolvement": 3, "JobLevel": 2, "JobSatisfaction": 4, "MonthlyIncome": 5000, "MonthlyRate": 12000, "NumCompaniesWorked": 2, "PercentSalaryHike": 10, "PerformanceRating": 3, "RelationshipSatisfaction": 3, "StockOptionLevel": 1, "TotalWorkingYears": 10, "TrainingTimesLastYear": 2, "WorkLifeBalance": 3, "YearsAtCompany": 5, "YearsInCurrentRole": 3, "YearsSinceLastPromotion": 2, "YearsWithCurrManager": 2, "BusinessTravel": "Travel_Rarely", "Department": "Research_&_Development", "EducationField": "Life_Sciences", "Gender": "Male", "JobRole": "Research_Scientist", "MaritalStatus": "Single", "OverTime": "No"}'
+          docker stop api-test
+
+      - name: Push to Docker Hub (API)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker tag employee-attrition-api:latest ${{ secrets.DOCKER_USERNAME }}/employee-attrition-api:v1.0.0
+          docker push ${{ secrets.DOCKER_USERNAME }}/employee-attrition-api:v1.0.0
