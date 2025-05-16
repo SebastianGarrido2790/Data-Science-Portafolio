@@ -1,4 +1,4 @@
-## Business Understanding: Approach and Deliverables
+# Business Understanding: Approach and Deliverables
 
 This phase is critical to align the project with business goals, define clear objectives, and ensure stakeholder buy-in. Below, I’ll outline the process, deliverables, and expectations for this phase, tailored to the IBM HR Analytics Employee Attrition dataset and your project context. I’ll structure the response to address each component of the Business Understanding phase, culminating in a well-defined problem statement, SMART goals, and a project plan.
 
