@@ -16,6 +16,8 @@ Welcome to my professional data science project portfolio. This repository prese
 | [8. Time Series Projects](./8_Time_Series_Projects/) | Forecasting of energy consumption and sales using XGBoost, Prophet, and sktime. |
 | [9. Churn Case Study](./9_Caso_Estudio_Churn/) | Comprehensive case study applying an end-to-end data science lifecycle to customer churn prediction. |
 | [10. NYC Taxis Project](./10_NYC_Taxis_Project/) | Exploratory analysis of NYC taxi ride patterns from a business intelligence perspective. |
+| [11. PDF Summarization with LLMs](./11_PDF_Summary_with_LLMs/) | Automated summarization of PDF files using OpenAI and Anthropic LLMs, with flexible output formats. |
+| [12. Employee Attrition Prediction](./12_Employee_Attrition/) | End-to-end ML pipeline to predict employee attrition, deployed on AWS ECS with batch and real-time API capabilities. |
 
 ## 🛠 Technologies
 
@@ -23,11 +25,12 @@ Welcome to my professional data science project portfolio. This repository prese
 - TensorFlow, Keras, PyTorch
 - Natural Language Processing (BERT, GloVe), Transformers
 - LangChain
-- Flask API development
+- Flask and FastAPI for development
 - Prophet, sktime, Time Series Forecasting
 - Matplotlib, Seaborn, Plotly
 - Conda, Git, GitHub
 - Visual Studio Code, Google Colab
+- uv (package management for specific projects)
 
 ## 📌 Project Details
 
@@ -160,6 +163,48 @@ Welcome to my professional data science project portfolio. This repository prese
 - Route optimization for taxi services
 - Urban demand analysis
 - Mobility trend benchmarking for policy development
+
+### 11. PDF Summarization with LLMs
+**Summary:** Built a Python script to automate the summarization of multiple PDF files using large language models (LLMs) from OpenAI (GPT-3.5-turbo) or Anthropic (Claude-3.5-Haiku-latest), with customizable output formats (text or JSON).
+
+🔹 Key features:
+- Processes PDFs using `PyPDFLoader` and LangChain’s `map_reduce` summarization chain.
+- Supports model selection, directory scanning, and flexible output formatting.
+- Includes error handling and console feedback for user-friendly operation.
+
+### 12. Employee Attrition Prediction
+**Summary:** Developed an end-to-end machine learning pipeline to predict employee attrition for a fictional company, UseC, using the IBM HR Analytics dataset (1,470 employees). Following the CRISP-DM methodology, we built, evaluated, and deployed a LogisticRegression model (recall = 0.7102, precision = 0.27) on AWS ECS, enabling HR to reduce turnover by 10% within 12 months, potentially saving $825,000 annually. The project includes batch predictions for monthly workflows and a real-time FastAPI endpoint for on-demand predictions.
+
+🔹 **Phase 1: Business Understanding (Week 1-2)**
+- Defined SMART goal: Reduce attrition by 10% within 12 months, achieve ≥70% recall.
+- Identified key drivers (e.g., low `JobSatisfaction`, high `OverTime`).
+- Engaged HR stakeholders for alignment.
+
+🔹 **Phase 2: Data Understanding (Week 3-4)**
+- Explored dataset: 1,470 rows, 35 columns, no missing values.
+- Flagged redundant columns (e.g., `Over18`, `EmployeeCount`) for removal.
+
+🔹 **Phase 3: EDA & Insights (Week 5-6)**
+- Confirmed key drivers: low `JobSatisfaction`, high `OverTime`, long `DistanceFromHome`.
+- Visualized patterns (e.g., correlation heatmaps, attrition distributions).
+
+🔹 **Phase 4: Data Preparation (Week 7-8)**
+- Engineered features: `SatisfactionScore`, `TenureRatio`, `LongCommute`.
+- Processed data: Scaled numerical features, one-hot encoded categorical features.
+
+🔹 **Phase 5: Modeling & Experimentation (Week 9-10)**
+- Tested LogisticRegression, RandomForest, XGBoost with MLflow tracking.
+- Selected LogisticRegression: recall 0.7102 (threshold 0.45), precision 0.27.
+- Used SHAP for interpretability (top features: `OverTime`, `SatisfactionScore`).
+
+🔹 **Phase 6: Model Evaluation (Week 11)**
+- Achieved recall goal (0.7102 ≥ 0.70); false positives (~383) mitigated via HR review.
+- Estimated ROI: $825,000 savings, $1,915,000 false positive costs (at $5,000/intervention).
+
+🔹 **Phase 7: Deployment & MLOps (Week 12)**
+- Deployed on AWS ECS with Fargate: batch predictions (Docker) and real-time FastAPI API.
+- Integrated CI/CD via GitHub Actions; planned Prometheus/Grafana monitoring.
+- Handover to HR with training and documentation.
 
 ## 📂 Project Architecture
 Selected projects adopt a modular and reproducible structure, as follows:
