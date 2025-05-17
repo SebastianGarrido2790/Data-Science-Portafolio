@@ -38,9 +38,7 @@ except Exception as e:
     raise
 
 try:
-    scaler = joblib.load(
-        r"C:\Users\sebas\Documents\Data_Science\Portfolio\Data-Science-Portfolio\12_Employee_Attrition\models\scaler.pkl"
-    )
+    scaler = joblib.load(r"C:\Users\...\12_Employee_Attrition\models\scaler.pkl")
     logger.info("Scaler loaded successfully")
 except Exception as e:
     logger.error(f"Failed to load scaler: {e}")
