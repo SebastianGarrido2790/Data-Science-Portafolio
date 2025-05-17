@@ -135,7 +135,7 @@ The project follows the CRISP-DM methodology, with detailed reports in the `repo
 ### Setup
 1. **Clone the Repository**:
    ```
-   git clone https://github.com/yourusername/employee-attrition.git
+   git clone https://github.com/SebastianGarrido2790/employee-attrition.git
    cd employee-attrition
    ```
 
