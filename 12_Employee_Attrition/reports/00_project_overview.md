@@ -104,6 +104,11 @@ Approval to proceed, with a clear ROI estimate, risks identified, and mitigation
 - **Deployment Style**: Depending on needs, we might deploy as a batch process (e.g., monthly attrition scores) or a real-time API for HR tools.  
 - **Setup**: The model will be serialized, containerized (e.g., Docker), and integrated into existing systems.  
 - **CI/CD**: Automated pipelines will handle updates and testing.  
+- **Deploy to AWS ECS with CI/CD**: We’ll deploy the API to AWS ECS (Elastic Container Service) using an ECS cluster with Fargate (serverless compute). We’ll set up:
+    - **ECR (Elastic Container Registry)**: To store the Docker image.
+    - **ECS Cluster and Task Definition**: To run the container.
+    - **Application Load Balancer (ALB)**: To handle HTTPS traffic.
+    - **GitHub Actions**: For CI/CD to build, push, and deploy the image.
 - **Monitoring**: We’ll track performance and watch for drift (e.g., if attrition patterns shift). Retraining will be planned if needed.  
 - **Docs**: Full documentation will support handover to ops teams.
 
