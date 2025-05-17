@@ -180,8 +180,8 @@ The project follows the CRISP-DM methodology, with detailed reports in the `repo
    ```
 
 ### Real-Time API
-![FastAPI1 screenshot](reports\figures\FastAPI1.png)
-![FastAPI2 screenshot](reports\figures\FastAPI2.png)
+![FastAPI1 screenshot](reports/figures/FastAPI1.png)
+![FastAPI2 screenshot](reports/figures/FastAPI2.png)
 1. **Build and Run Docker**:
    ```
    docker build -f Dockerfile.api -t employee-attrition-api .
