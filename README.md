@@ -2,7 +2,7 @@
 
 Welcome to my professional data science project portfolio. This repository presents a curated collection of projects that demonstrate expertise in data analysis, machine learning, predictive modeling, data visualization, and time series forecasting. Each project is accompanied by well-structured code, comprehensive documentation, and practical approaches to solving real-world problems.
 
-## 🔍 Project Summary
+## 🔍 Projects Summary
 
 | Project | Description |
 |---------|-------------|
