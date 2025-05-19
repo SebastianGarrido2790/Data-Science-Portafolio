@@ -30,7 +30,7 @@ I’ll update the `devcontainer.json` file to align with the Employee Attrition 
 
 Here’s the updated `devcontainer.json`:
 
-```json with Comments
+```jsonwithComments
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
 {
