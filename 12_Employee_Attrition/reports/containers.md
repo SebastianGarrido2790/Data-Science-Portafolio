@@ -30,7 +30,7 @@ I’ll update the `devcontainer.json` file to align with the Employee Attrition 
 
 Here’s the updated `devcontainer.json`:
 
-```JSON with Comments
+```js
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
 {
@@ -196,7 +196,7 @@ Here’s how you can create and configure the new `devcontainer.json` for `Docke
 
 Below is the tailored `devcontainer-batch.json` suited for the Employee Attrition Prediction project’s batch prediction environment as of 12:27 AM -04 on Monday, May 19, 2025:
 
-```json
+```js
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
 {
