@@ -6,17 +6,17 @@ Welcome to my professional data science project portfolio. This repository prese
 
 | Project | Description |
 |---------|-------------|
-| [1. AI/ML Customer Churn Prediction](./1_AI-ML_Customer_Churn/) | Complete ML pipeline integrating embeddings, text summarization, and XGBoost for customer churn prediction. |
-| [2. Healthcare Insurance Cost Prediction](./2_Predicción_de_Costos_Médicos/) | Application of linear and tree-based models to forecast individual medical expenses. |
-| [3. KMeans Online Retail](./3_KMeans_Online_Retail/) | Customer segmentation through RFM analysis and clustering using KMeans. |
-| [4. Sentiment Analysis – Amazon Alexa](./4_Análisis_de_Sentimiento_–_Amazon_Alexa/) | Review classification utilizing BERT, XGBoost, and a Flask API for deployment. |
-| [5. Sentiment Analysis with Neural Networks](./5_Análisis_de_Sentimiento_con_Redes_Neuronales/) | Comparative study of FFNN, CNN, RNN, and LSTM architectures for sentiment analysis. |
-| [6. Superstore Sales Analysis](./6_Análisis_de_Ventas_–_Superstore/) | Sales and profitability analysis across customer segments, product categories, and regions. |
-| [7. U.S. Traffic Accidents](./7_Accidentes_de_Trafico_en_EEUU/) | Geospatial, temporal, and meteorological analysis of over 7 million traffic accidents. |
-| [8. Time Series Projects](./8_Time_Series_Projects/) | Forecasting of energy consumption and sales using XGBoost, Prophet, and sktime. |
-| [9. Churn Case Study](./9_Caso_Estudio_Churn/) | Comprehensive case study applying an end-to-end data science lifecycle to customer churn prediction. |
+| [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/) | Complete ML pipeline integrating embeddings, text summarization, and XGBoost for customer churn prediction. |
+| [2. Healthcare Insurance Cost Prediction](./02_Healthcare_Insurance_Costs/) | Application of linear and tree-based models to forecast individual medical expenses. |
+| [3. KMeans Online Retail](./03_KMeansOnline_Retail/) | Customer segmentation through RFM analysis and clustering using KMeans. |
+| [4. Sentiment Analysis – Amazon Alexa](./04_Sentiment_Analysis_Amazon_Alexa_Reviews/) | Review classification utilizing BERT, XGBoost, and a Flask API for deployment. |
+| [5. Sentiment Analysis with Neural Networks](./05_Sentiment_Analysis_with_Neural_Network/) | Comparative study of FFNN, CNN, RNN, and LSTM architectures for sentiment analysis. |
+| [6. Superstore Sales Analysis](./06_Superstore_Sales_Analysis/) | Sales and profitability analysis across customer segments, product categories, and regions. |
+| [7. U.S. Traffic Accidents](./07_US_Traffic_Accidents/) | Geospatial, temporal, and meteorological analysis of over 7 million traffic accidents. |
+| [8. Time Series Projects](./08_Time_Series_Projects/) | Forecasting of energy consumption and sales using XGBoost, Prophet, and sktime.
+| [9. Churn Case Study](./09_Churn_Study_Case/) | Comprehensive case study applying an end-to-end data science lifecycle to customer churn prediction. |
 | [10. NYC Taxis Project](./10_NYC_Taxis_Project/) | Exploratory analysis of NYC taxi ride patterns from a business intelligence perspective. |
-| [11. PDF Summarization with LLMs](./11_PDF_Summary_with_LLMs/) | Automated summarization of PDF files using OpenAI and Anthropic LLMs, with flexible output formats. |
+| [11. PDF Summarization with LLMs](./11_PDF_Summary_with_LLMs/) | Python script for automated PDF summarization using OpenAI and Anthropic LLMs, offering simple and advanced modes with customizable chains and structured outputs. |
 | [12. Employee Attrition Prediction](./12_Employee_Attrition/) | End-to-end ML pipeline to predict employee attrition, deployed on AWS ECS with batch and real-time API capabilities. |
 | [13. SQL Data Scientist Job Market Analysis](./13_SQL_Project_Data_Job_Analysis/) | SQL-driven analysis of data science job postings to uncover trends in salaries, skills, and career opportunities. |
 
@@ -30,84 +30,84 @@ Welcome to my professional data science project portfolio. This repository prese
 - Prophet, sktime, Time Series Forecasting
 - Matplotlib, Seaborn, Plotly
 - SQL, PostgreSQL
-- Conda, Git, GitHub
+- Conda, Git, GitHub, GitHub Action
 - Visual Studio Code, Google Colab
 - uv (package management for specific projects)
 
 ## 📌 Project Details
 
-### 1. AI/ML Customer Churn Prediction
+### [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/)
 **Summary:** Developed a complete machine learning pipeline to predict customer churn, leveraging advanced AI techniques for feature enrichment. Text summarization and embedding extraction from customer support ticket notes were integrated into an XGBoost classifier.
 
-🔹 Key components:
+🔹 **Key components**:
 - **Text Summarization:** Utilized Hugging Face/OpenAI models to create concise summaries of ticket notes.
 - **Embeddings:** Converted text summaries into dense numerical representations.
 - **Modeling:** Combined numerical and embedded features to train and optimize an XGBoost classifier for deployment.
 
-### 2. Healthcare Insurance Cost Prediction
+### [2. Healthcare Insurance Cost Prediction](./02_Healthcare_Insurance_Costs/)
 **Summary:** Built predictive models for healthcare insurance costs using multiple regression techniques, including Linear Regression, Ridge, Lasso, ElasticNet, Polynomial Regression, and Decision Trees.
 
-🔹 Highlights:
+🔹 **Highlights**:
 - Principal model: Multivariate regression
 - Metrics evaluated: MAE, RMSE, R²
 
-### 3. KMeans Online Retail
+### [3. KMeans Online Retail](./03_KMeansOnline_Retail/)
 **Summary:** Applied RFM (Recency, Frequency, Monetary Value) analysis and KMeans clustering to segment e-commerce customers, enabling data-driven marketing strategies.
 
-🔹 Key steps:
+🔹 **Key steps**:
 - Outlier detection and preprocessing
 - RFM feature engineering
 - Cluster identification and visualization
 
-### 4. Sentiment Analysis – Amazon Alexa
+### [4. Sentiment Analysis – Amazon Alexa](./04_Sentiment_Analysis_Amazon_Alexa_Reviews/)
 **Summary:** Performed sentiment analysis on Amazon Alexa reviews using DistilBERT fine-tuning, Random Forest, and XGBoost classifiers, with emphasis on maximizing recall for negative reviews.
 
-🔹 Implementation:
+🔹 **Implementation**:
 - Advanced NLP preprocessing
 - Model training and evaluation
 - API development using Flask for real-time prediction
 
-### 5. Sentiment Analysis with Neural Networks
+### [5. Sentiment Analysis with Neural Networks](./05_Sentiment_Analysis_with_Neural_Network/)
 **Summary:** Conducted a comparative study of various deep learning architectures for sentiment classification on IMDb, Amazon, and Yelp review datasets.
 
-🔹 Models compared:
+🔹 **Models compared**:
 - Feedforward Neural Networks (FFNN) with pre-trained embeddings
 - CNN + LSTM hybrid models
 - Bidirectional RNNs and LSTMs
 
-### 6. Superstore Sales Analysis
+### [6. Superstore Sales Analysis](./06_Superstore_Sales_Analysis/)
 **Summary:** Analyzed sales performance across different customer segments, product categories, and geographic regions to identify strategic business insights.
 
-🔹 Areas of focus:
+🔹 **Areas of focus**:
 - Customer segmentation and profitability
 - Analysis of shipping methods and delivery performance
 - Regional sales trends visualization
 
-### 7. U.S. Traffic Accidents
+### [7. U.S. Traffic Accidents](./07_US_Traffic_Accidents/)
 **Summary:** Explored a dataset of over seven million U.S. traffic accidents to identify trends based on time, location, and weather conditions.
 
-🔹 Research questions addressed:
+🔹 **Research questions addressed**:
 - Peak accident times
 - Cities with the highest accident rates
 - Weather factors influencing accident severity
 
-### 8. Time Series Projects
-#### 8.1 Time Series Forecasting with XGBoost
+### [8. Time Series Projects](./08_Time_Series_Projects/)
+#### [8.1 Time Series Forecasting with XGBoost](./08_Time_Series_Projects/Time_Series_XGBoost.ipynb/)
 **Summary:** Developed an hourly energy consumption forecasting model using XGBoost, with enhanced feature engineering for improved accuracy during off-peak hours.
 
-🔹 Techniques:
+🔹 **Techniques**:
 - Advanced temporal feature extraction
 - Model ensembling with LightGBM and LSTM
 
-#### 8.2 Time Series Forecasting with Prophet and sktime
+#### [8.2 Time Series Forecasting with Prophet and sktime](./08_Time_Series_Projects/Time_Series_sktime/)
 **Summary:** Forecasted daily sales data using Prophet, sktime, and XGBoost, integrating both classical and modern time series forecasting techniques.
 
-🔹 Techniques applied:
+🔹 **Techniques applied**:
 - Seasonality and trend modeling with Prophet
 - Classical and machine learning time series models with sktime
 - Feature-enriched XGBoost forecasting
 
-### 9. Churn Case Study
+### [9. Churn Case Study](./09_Churn_Study_Case/)
 **Summary:** For this six-month project, we created a fictional company, StreamHub, Inc., a streaming platform with 10 million subscribers similar to Netflix and Spotify, using real-world figures to simulate the industry's reality. The objective is to conduct a case study aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month) applying a complete data science lifecycle. Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
 
 🔹 **Phase 1: Business Understanding (June 2025)**
@@ -149,32 +149,43 @@ Welcome to my professional data science project portfolio. This repository prese
 - Set up monitoring (CloudWatch, Streamlit dashboard) and quarterly retraining.
 - Conducted training and post-deployment review.
 
-### 10. NYC Taxis Project
+### [10. NYC Taxis Project](./10_NYC_Taxis_Project/)
 **Summary:** Conducted an end-to-end exploratory data analysis of NYC taxi rides, following a full ML pipeline to deliver actionable business insights.
 
-🔹 Business objective:
+🔹 **Business objective**:
 - Predict taxi ride demand in Manhattan to support operational and policy decision-making.
 
-🔹 Project structure:
+🔹 **Project structure**:
 - Data ingestion and transformation
 - Baseline model development and improvement
 - Batch scoring system implementation with three pipelines
 - Monitoring dashboard creation
 
-🔹 Potential applications:
+🔹 **Potential applications**:
 - Route optimization for taxi services
 - Urban demand analysis
 - Mobility trend benchmarking for policy development
 
-### 11. PDF Summarization with LLMs
-**Summary:** Built a Python script to automate the summarization of multiple PDF files using large language models (LLMs) from OpenAI (GPT-3.5-turbo) or Anthropic (Claude-3.5-Haiku-latest), with customizable output formats (text or JSON).
+### [11. PDF Summarization with LLMs](./11_PDF_Summary_with_LLMs/)
+**Summary:** Developed a Python script to automate PDF summarization using OpenAI (GPT-3.5-turbo) and Anthropic (Claude-3.5-Haiku-latest) LLMs, offering two versions: a simple script (`main.py`) for basic summarization and an enhanced script (`custom_prompt/main.py`) with advanced features for Machine Learning papers, with customizable output formats (text or JSON).
 
-🔹 Key features:
-- Processes PDFs using `PyPDFLoader` and LangChain’s `map_reduce` summarization chain.
-- Supports model selection, directory scanning, and flexible output formatting.
-- Includes error handling and console feedback for user-friendly operation.
+🔹 **Key features**:
+- **Simple Version (`main.py`)**:
+   - Uses `PyPDFLoader` and LangChain’s `map_reduce` chain.
+   - Supports model selection, directory scanning, and flexible text/JSON output.
+   - Includes error handling and console feedback.
 
-### 12. Employee Attrition Prediction
+- **Enhanced Version (`custom_prompt/main.py`)**:
+   - Supports customizable chain types (`stuff`, `map_reduce`, `refine`) via `--chain-type`.
+   - Allows custom prompt templates with `--map-prompt-file`, `--combine-prompt-file`, `--refine-prompt-file`.
+   - Enables verbose logging with `--verbose` and `token_max` configuration with `--token-max`.
+   - Offers a structured summary format (`--summary-style=structured`) with:
+      - **Main Idea**: A single sentence (≤50 words) summarizing the paper’s contribution.
+      - **Key Points**: Up to 3 practical Machine Learning applications.
+      - **Conclusion**: A sentence on practical impact for data scientists.
+   - Maintains a formal tone and focuses on practical applications.
+
+### [12. Employee Attrition Prediction](./12_Employee_Attrition/)
 **Summary:** Developed an end-to-end machine learning pipeline to predict employee attrition for a fictional company, UseC, using the IBM HR Analytics dataset (1,470 employees). Following the CRISP-DM methodology, we built, evaluated, and deployed a LogisticRegression model (recall = 0.7102, precision = 0.27) on AWS ECS, enabling HR to reduce turnover by 10% within 12 months, potentially saving $825,000 annually. The project includes batch predictions for monthly workflows and a real-time FastAPI endpoint for on-demand predictions.
 
 🔹 **Phase 1: Business Understanding (Week 1-2)**
@@ -208,10 +219,10 @@ Welcome to my professional data science project portfolio. This repository prese
 - Integrated CI/CD via GitHub Actions; planned Prometheus/Grafana monitoring.
 - Handover to HR with training and documentation.
 
-### 13. SQL Data Scientist Job Market Analysis
+### [13. SQL Data Scientist Job Market Analysis](./13_SQL_Project_Data_Job_Analysis/)
 **Summary:** Analyzed a dataset of data science job postings using SQL to uncover trends in salaries, in-demand skills, and career opportunities. The project delivers actionable insights for job seekers and recruiters by identifying high-paying roles, optimal skills, and market demands.
 
-🔹 Key components:
+🔹 **Key components**:
 - **Database Design:** Created a PostgreSQL schema with relational tables for jobs, skills, and companies, visualized in an ER diagram.
 - **SQL Queries:** Developed queries to analyze top-paying jobs, skill demand, salary trends, and skill co-occurrences (e.g., Python + SQL).
 - **Insights:** Identified high-value skills (e.g., Snowflake, PyTorch) and trends like the dominance of remote roles and full-time positions.
@@ -222,6 +233,7 @@ Selected projects adopt a modular and reproducible structure, as follows:
 ```
 ├── LICENSE
 ├── README.md          <- Project overview and usage instructions
+├── .env               <- Environmental variables
 ├── data
 │   ├── external       <- Third-party sourced data
 │   ├── interim        <- Intermediate data processing outputs
