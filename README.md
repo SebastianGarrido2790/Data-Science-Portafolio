@@ -36,7 +36,7 @@ Welcome to my professional data science project portfolio. This repository prese
 
 ## 📌 Project Details
 
-### 1. AI/ML Customer Churn Prediction
+### [1. AI/ML Customer Churn Prediction](./1_AI-ML_Customer_Churn/)
 **Summary:** Developed a complete machine learning pipeline to predict customer churn, leveraging advanced AI techniques for feature enrichment. Text summarization and embedding extraction from customer support ticket notes were integrated into an XGBoost classifier.
 
 🔹 Key components:
