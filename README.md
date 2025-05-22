@@ -40,9 +40,9 @@ Welcome to my professional data science project portfolio. This repository prese
 **Summary:** Developed a complete machine learning pipeline to predict customer churn, leveraging advanced AI techniques for feature enrichment. Text summarization and embedding extraction from customer support ticket notes were integrated into an XGBoost classifier.
 
 🔹 **Key components**:
-   - **Text Summarization:** Utilized Hugging Face/OpenAI models to create concise summaries of ticket notes.
-   - **Embeddings:** Converted text summaries into dense numerical representations.
-   - **Modeling:** Combined numerical and embedded features to train and optimize an XGBoost classifier for deployment.
+- **Text Summarization:** Utilized Hugging Face/OpenAI models to create concise summaries of ticket notes.
+- **Embeddings:** Converted text summaries into dense numerical representations.
+- **Modeling:** Combined numerical and embedded features to train and optimize an XGBoost classifier for deployment.
 
 ### [2. Healthcare Insurance Cost Prediction](./02_Healthcare_Insurance_Costs/)
 **Summary:** Built predictive models for healthcare insurance costs using multiple regression techniques, including Linear Regression, Ridge, Lasso, ElasticNet, Polynomial Regression, and Decision Trees.
