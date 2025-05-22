@@ -6,7 +6,7 @@ Welcome to my professional data science project portfolio. This repository prese
 
 | Project | Description |
 |---------|-------------|
-| [1. AI/ML Customer Churn Prediction](./1_AI-ML_Customer_Churn/) | Complete ML pipeline integrating embeddings, text summarization, and XGBoost for customer churn prediction. |
+| [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/) | Complete ML pipeline integrating embeddings, text summarization, and XGBoost for customer churn prediction. |
 | [2. Healthcare Insurance Cost Prediction](./2_Predicción_de_Costos_Médicos/) | Application of linear and tree-based models to forecast individual medical expenses. |
 | [3. KMeans Online Retail](./3_KMeans_Online_Retail/) | Customer segmentation through RFM analysis and clustering using KMeans. |
 | [4. Sentiment Analysis – Amazon Alexa](./4_Análisis_de_Sentimiento_–_Amazon_Alexa/) | Review classification utilizing BERT, XGBoost, and a Flask API for deployment. |
@@ -36,7 +36,7 @@ Welcome to my professional data science project portfolio. This repository prese
 
 ## 📌 Project Details
 
-### [1. AI/ML Customer Churn Prediction](./1_AI-ML_Customer_Churn/)
+### [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/)
 **Summary:** Developed a complete machine learning pipeline to predict customer churn, leveraging advanced AI techniques for feature enrichment. Text summarization and embedding extraction from customer support ticket notes were integrated into an XGBoost classifier.
 
 🔹 Key components:
