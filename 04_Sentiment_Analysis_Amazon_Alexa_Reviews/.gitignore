@@ -76,7 +76,6 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
-
 # Mac OS-specific storage files
 .DS_Store
 
@@ -86,3 +85,7 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+# Large files
+echo "models/distilbert_model/distilbert_3class_model/model.safetensors" >> .gitignore
+echo "models/distilbert_model/distilbert_binary_model/model.safetensors" >> .gitignore
