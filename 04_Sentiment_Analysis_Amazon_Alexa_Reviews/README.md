@@ -122,6 +122,13 @@ This dataset consists of a nearly 3000 Amazon customer reviews (input text), sta
   - Batch script outputs to console and CSV.
   - Figures saved to `reports/figures/` for model evaluation.
 
+### Model Files
+The DistilBERT model files (`model.safetensors`) were removed from the repository due to GitHub's file size limit. Download them from the following links and place them in the respective directories:
+- `models/distilbert_model/distilbert_3class_model/model.safetensors`: [Google Drive Link](https://drive.google.com/drive/folders/1ah736tetlyMlKcnynhPq0AfyUSgXGay9)
+- `models/distilbert_model/distilbert_binary_model/model.safetensors`: [Google Drive Link](https://drive.google.com/drive/folders/1ah736tetlyMlKcnynhPq0AfyUSgXGay9)
+
+Update the `MODEL_PATH` variable in `predict_model.py` and `api.py` to point to the local location (e.g., `C:/Users/Models/`).
+
 ## Installation Instructions
 
 ### Prerequisites

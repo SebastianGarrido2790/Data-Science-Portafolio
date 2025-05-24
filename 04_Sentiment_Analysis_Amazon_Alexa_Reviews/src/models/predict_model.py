@@ -7,10 +7,7 @@ import csv
 import os
 
 # Constants
-MODEL_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "../../models/distilbert_model/distilbert_binary_model",
-)
+MODEL_PATH = "C:\Users\Desktop\Models\distilbert_binary_model"
 DEFAULT_THRESHOLD = 0.95
 MAX_BATCH_SIZE = 100
 

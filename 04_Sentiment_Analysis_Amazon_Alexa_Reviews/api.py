@@ -4,14 +4,12 @@ from transformers import DistilBertTokenizer, DistilBertForSequenceClassificatio
 
 app = Flask(__name__)
 
+MODEL_PATH = "C:\Users\Desktop\Models\distilbert_binary_model"
+
 # Load model and tokenizer
 try:
-    tokenizer = DistilBertTokenizer.from_pretrained(
-        "models/distilbert_model/distilbert_binary_model"
-    )
-    model = DistilBertForSequenceClassification.from_pretrained(
-        "models/distilbert_model/distilbert_binary_model"
-    )
+    tokenizer = DistilBertTokenizer.from_pretrained(MODEL_PATH)
+    model = DistilBertForSequenceClassification.from_pretrained(MODEL_PATH)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.eval()
