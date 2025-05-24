@@ -30,7 +30,7 @@ Welcome to my professional data science project portfolio. This repository prese
 - Prophet, sktime, Time Series Forecasting
 - Matplotlib, Seaborn, Plotly
 - SQL, PostgreSQL
-- Conda, Git, GitHub, GitHub Action
+- Conda, Git, GitHub, GitHub Actions
 - Visual Studio Code, Google Colab
 - uv (package management for specific projects)
 
