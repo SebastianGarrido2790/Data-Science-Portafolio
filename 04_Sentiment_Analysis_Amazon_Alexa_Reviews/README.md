@@ -181,7 +181,7 @@ python api.py
 - Enter a review (e.g., "I love this product!") and click "Predict".
 - View the sentiment, probability, and threshold on the page.
 
-![Sentiment Analysis API](reports\figures\Sentiment_Analysis_DistilBERT.png)
+![Sentiment Analysis API](reports/figures/Sentiment_Analysis_DistilBERT.png)
 
 ### 2. Batch Predictions with `predict_model.py` (DistilBERT)
 #### Example 1: Using Command-Line Arguments
