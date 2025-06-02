@@ -1,55 +1,53 @@
 ├── LICENSE
-├── README.md          <- The top-level README for developers using this project.
+├── README.md          <- This file, providing project overview and usage instructions.
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+│   ├── external       <- Data from third-party sources.
+│   ├── interim        <- Intermediate data, including generated summaries.
+│   ├── processed      <- Final datasets with embeddings ready for modeling.
+│   └── raw            <- Original, immutable data dumps.
 │
-├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+├── models             <- Trained models, predictions, and model summaries.
+│   ├── feature_names.txt
+│   ├── label_encoder.pkl
+│   ├── metadata.json
+│   ├── scaler.pkl
+│   ├── xgb_churn_model.json
+│   └── xgb_churn_model.pkl
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
+├── references         <- Data dictionaries and supplementary materials.
 │
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
+├── reports            <- Analysis reports in HTML, PDF, LaTeX, etc.
+│   ├── figures        <- Figures generated during analysis.
+│   │   ├── feature_importance.png
+│   │   └── roc_curve.png
+│   ├── adaptability_enhancement.md
+│   ├── model_deployment.md
+│   ├── model_performance.md
+│   └── scalability_enhancement.md
 │
 ├── .env
-│
 ├── .gitignore
+├── pyproject.toml
+├── uv.lock
 │
-├── config.yml
-│
-├── environment.yml
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── src                <- Source code for use in this project.
-│   ├── __init__.py    <- Makes src a Python module
-│   │
-│   ├── config         <- Helper scripts 
-│   ├── __init__.py    <- Makes src a Python module
-│   ├── factories.py   <- Abstracts initializations
-│   ├── logger.py      <- Loggings
-│   ├── settings.py    <- Environment-specific
-│   ├
-│   ├── data           <- Scripts to download or generate data
-│   │   └── make_dataset.py
-│   │
-│   ├── features       <- Scripts to turn raw data into features for modeling
-│   │   └── build_features.py
-│   │
-│   ├── models         <- Scripts to train models and then use trained models to make
-│   │   │                 predictions
-│   │   ├── predict_model.py
-│   │   └── train_model.py
-│   │
-│   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-│       └── visualize.py
-
+└── src                <- Source code for the project.
+    ├── __init__.py
+    ├── config
+    │   ├── __init__.py
+    │   ├── factories.py   <- Factories for initializing embeddings and summarization clients.
+    │   └── settings.py    <- Environment-specific settings using pydantic.
+    │
+    ├── data
+    │   └── make_dataset.py   <- Data download and preprocessing scripts.
+    │
+    ├── features
+    │   └── build_features.py   <- Scripts for feature engineering.
+    │
+    ├── models
+    │   ├── data_processing.py    <- Handle data loading, summarization, embedding, and feature preparation.
+    │   ├── model_deployment.py   <- Manage model training and evaluation
+    │   ├── model_training.py     <- Handle model saving, loading, and inference.
+    │   └── train_model.py        <- Model training pipeline integrating text summarization and embeddings.
+    │
+    └── visualization
+        └── visualize.py      <- Scripts for generating visualizations.
