@@ -26,7 +26,7 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder
 import joblib
 import ast
-from src.config.factories import EmbeddingFactory, SummaryFactory
+from src.config import EmbeddingFactory, SummaryFactory
 from concurrent.futures import ThreadPoolExecutor
 import logging
 
