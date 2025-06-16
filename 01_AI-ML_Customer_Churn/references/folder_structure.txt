@@ -45,9 +45,9 @@
     │
     ├── models
     │   ├── data_processing.py    <- Handle data loading, summarization, embedding, and feature preparation.
-    │   ├── model_deployment.py   <- Manage model training and evaluation
-    │   ├── model_training.py     <- Handle model saving, loading, and inference.
-    │   └── train_model.py        <- Model training pipeline integrating text summarization and embeddings.
+    │   ├── main.py               <- Model training pipeline integrating text summarization and embeddings.
+    │   ├── predict_model.py      <- Handle model saving, loading, and inference.
+    │   └── train_model.py        <- Manage model training and evaluation
     │
     └── visualization
         └── visualize.py      <- Scripts for generating visualizations.
