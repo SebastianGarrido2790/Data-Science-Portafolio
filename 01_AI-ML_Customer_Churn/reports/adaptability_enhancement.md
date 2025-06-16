@@ -6,11 +6,11 @@ To improve adaptability, we will enable the pipeline to handle evolving data pat
 
 ### **Adaptability Enhancement Plan**
 1. **Periodic Retraining**:
-   - Add a mechanism in `src/models/train_model.py` to schedule retraining based on a time interval or new data availability, using a simple timestamp check.
+   - Add a mechanism in `src/models/main.py` to schedule retraining based on a time interval or new data availability, using a simple timestamp check.
 2. **Data Drift Detection**:
    - Implement a basic drift detection method in `src/data/make_dataset.py` or a new script to compare statistical properties (e.g., mean, variance) of new data against the training data, triggering a retraining flag.
 3. **Dynamic Model Adjustment**:
-   - Update `src/models/model_training.py` to incorporate new data incrementally or retrain with updated datasets when drift is detected.
+   - Update `src/models/train_model.py` to incorporate new data incrementally or retrain with updated datasets when drift is detected.
 
 ---
 
@@ -34,9 +34,9 @@ sys.path.insert(0, project_root)
 # Import modular scripts
 from src.data.make_dataset import make_dataset
 from src.models.data_processing import load_data, generate_summaries, generate_embeddings, prepare_features
-from src.models.model_training import split_data, train_model, evaluate_model, interpret_model
-from src.models.model_deployment import save_model_and_metadata, load_model_and_assets, predict_new_data
-from src.config.factories import EmbeddingFactory, SummaryFactory
+from src.models.train_model import split_data, train_model, evaluate_model, interpret_model
+from src.models.predict_model import save_model_and_metadata, load_model_and_assets, predict_new_data
+from src.config import EmbeddingFactory, SummaryFactory
 
 # Setup basic logging
 logging.basicConfig(level=logging.INFO)
@@ -453,7 +453,7 @@ summary:
 ### **Validation**
 - Run the pipeline:
   ```bash
-  python src/models/train_model.py
+  python src/models/main.py
   ```
 - Check logs for retraining messages (e.g., "Retraining triggered due to time interval") or drift detection (e.g., "Significant data drift detected").
 - Simulate drift by modifying `customer_churn.csv` (e.g., increasing `age` or `spend_rate` values significantly) and rerun to trigger retraining.
