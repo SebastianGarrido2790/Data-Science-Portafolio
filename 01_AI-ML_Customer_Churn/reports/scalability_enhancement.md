@@ -10,7 +10,7 @@ To improve scalability, we will focus on optimizing the pipeline to handle large
 2. **Optimize Data Processing**:
    - Modify `src/data/make_dataset.py` to handle large datasets efficiently using chunking with `pandas`.
 3. **Enable High-Throughput Inference**:
-   - Update `src/models/model_deployment.py` to support batch inference for multiple customer records, reducing latency for production use.
+   - Update `src/models/predict_model.py` to support batch inference for multiple customer records, reducing latency for production use.
 
 ---
 
@@ -246,7 +246,7 @@ if __name__ == "__main__":
 
 ---
 
-#### **3. Enable High-Throughput Inference in `src/models/model_deployment.py`**
+#### **3. Enable High-Throughput Inference in `src/models/predict_model.py`**
 We will update `predict_new_data` to support batch inference, allowing multiple customer records to be processed simultaneously.
 
 ```python
@@ -451,7 +451,7 @@ if __name__ == "__main__":
 ### **Validation**
 - Run the pipeline:
   ```bash
-  python src/models/train_model.py
+  python src/models/main.py
   ```
 - Check logs for parallel processing messages (e.g., "Generating ticket summaries in parallel...").
 - Verify that batch inference works by checking the predictions for multiple records.
