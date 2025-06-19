@@ -6,7 +6,7 @@ Welcome to my professional data science project portfolio. This repository prese
 
 | Project | Description |
 |---------|-------------|
-| [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/) | Complete ML pipeline integrating embeddings, text summarization, and XGBoost for customer churn prediction. |
+| [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/) | Complete ML pipeline integrating embeddings, text summarization (Hugging Face/OpenAI), and XGBoost for customer churn prediction. |
 | [2. Healthcare Insurance Cost Prediction](./02_Healthcare_Insurance_Costs/) | Application of linear and tree-based models to forecast individual medical expenses. |
 | [3. KMeans Online Retail](./03_KMeansOnline_Retail/) | Customer segmentation through RFM analysis and clustering using KMeans. |
 | [4. Sentiment Analysis – Amazon Alexa](./04_Sentiment_Analysis_Amazon_Alexa_Reviews/) | Review classification utilizing BERT, XGBoost, and a Flask API for deployment. |
@@ -33,16 +33,19 @@ Welcome to my professional data science project portfolio. This repository prese
 - Conda, Git, GitHub, GitHub Actions
 - Visual Studio Code, Google Colab
 - uv (package management for specific projects)
+- OpenAI API, Hugging Face Transformers
 
 ## 📌 Project Details
 
 ### [1. AI/ML Customer Churn Prediction](./01_AI-ML_Customer_Churn/)
-**Summary:** Developed a complete machine learning pipeline to predict customer churn, leveraging advanced AI techniques for feature enrichment. Text summarization and embedding extraction from customer support ticket notes were integrated into an XGBoost classifier.
+**Summary:** Developed a complete machine learning pipeline to predict customer churn, leveraging advanced AI techniques for feature enrichment. Text summarization and embedding extraction from customer support ticket notes are integrated into an XGBoost classifier, supporting both Hugging Face and OpenAI providers. Last updated: June 02, 2025.
 
 🔹 **Key components**:
-- **Text Summarization:** Utilized Hugging Face/OpenAI models to create concise summaries of ticket notes.
-- **Embeddings:** Converted text summaries into dense numerical representations.
-- **Modeling:** Combined numerical and embedded features to train and optimize an XGBoost classifier for deployment.
+- **Text Summarization:** Utilizes `sshleifer/distilbart-cnn-12-6` (Hugging Face) or OpenAI API to create concise summaries of ticket notes.
+- **Embeddings:** Converts text summaries into dense numerical representations using `sentence-transformers/all-MiniLM-L6-v2` (Hugging Face, 384 dimensions) or OpenAI's `text-embedding-ada-002` (1536 dimensions).
+- **Modeling:** Combines numerical features (`age`, `tenure`, `spend_rate`, `plan_type`) and embedded features to train and optimize an XGBoost classifier with `scale_pos_weight` for class imbalance.
+- **Deployment Prep**: Saves model, scaler, and feature names for inference (see `reports/model_deployment.md`).
+- **Performance**: Achieved ROC AUC of 0.7857 and recall of 0.33 for churn class (see `reports/model_performance.md` for details).
 
 ### [2. Healthcare Insurance Cost Prediction](./02_Healthcare_Insurance_Costs/)
 **Summary:** Built predictive models for healthcare insurance costs using multiple regression techniques, including Linear Regression, Ridge, Lasso, ElasticNet, Polynomial Regression, and Decision Trees.
@@ -223,9 +226,9 @@ Welcome to my professional data science project portfolio. This repository prese
 **Summary:** Analyzed a dataset of data science job postings using SQL to uncover trends in salaries, in-demand skills, and career opportunities. The project delivers actionable insights for job seekers and recruiters by identifying high-paying roles, optimal skills, and market demands.
 
 🔹 **Key components**:
-- **Database Design:** Created a PostgreSQL schema with relational tables for jobs, skills, and companies, visualized in an ER diagram.
+- **Database Design:** Created a `PostgreSQL` schema with relational tables for jobs, skills, and companies, visualized in an ER diagram.
 - **SQL Queries:** Developed queries to analyze top-paying jobs, skill demand, salary trends, and skill co-occurrences (e.g., Python + SQL).
-- **Insights:** Identified high-value skills (e.g., Snowflake, PyTorch) and trends like the dominance of remote roles and full-time positions.
+- **Insights:** Identified high-value skills (e.g., `Snowflake`, `PyTorch`) and trends like the dominance of remote roles and full-time positions.
 
 ## 📂 Project Architecture
 Selected projects adopt a modular and reproducible structure, as follows:
@@ -239,14 +242,12 @@ Selected projects adopt a modular and reproducible structure, as follows:
 │   ├── interim        <- Intermediate data processing outputs
 │   ├── processed      <- Final datasets ready for modeling
 │   └── raw            <- Original unprocessed datasets
-├── docs               <- Project documentation
 ├── models             <- Trained models and predictions
 ├── notebooks          <- Jupyter notebooks for analysis and experimentation
 ├── references         <- Research references and external documentation
 ├── reports            <- Generated analysis reports
 │   └── figures        <- Graphs and visualizations
 ├── requirements.txt   <- Python dependencies file
-├── environment.yml    <- Conda environment configuration file
 ├── src                <- Source code
 │   ├── data           <- Scripts for data ingestion and processing
 │   ├── features       <- Feature engineering scripts

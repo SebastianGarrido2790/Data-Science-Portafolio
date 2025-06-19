@@ -113,7 +113,7 @@ The pipeline executed successfully, completing all steps: data processing, train
 ### **Validation**
 - Run the script after adjustments:
   ```bash
-  python src/models/train_model.py
+  python src/models/main.py
   ```
 - Check the logs for:
   - Improved recall for class `1` (target > 0.33).

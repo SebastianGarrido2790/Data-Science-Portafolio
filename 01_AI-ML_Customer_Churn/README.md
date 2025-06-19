@@ -50,9 +50,9 @@ This project develops a machine learning solution to predict customer churn for 
     │   └── build_features.py <- Feature engineering.
     ├── models
     │   ├── data_processing.py    <- Data loading and preparation.
-    │   ├── model_deployment.py   <- Model training and evaluation.
-    │   ├── model_training.py     <- Model saving and inference.
-    │   └── train_model.py        <- Full training pipeline.
+    │   ├── train_model.py        <- Model training and evaluation.
+    │   ├── predict_model.py      <- Model saving and inference.
+    │   └── main.py               <- Full training pipeline.
     └── visualization
         └── visualize.py      <- Visualization scripts.
 ```
@@ -72,7 +72,7 @@ This project develops a machine learning solution to predict customer churn for 
 4. **Model Training**:
    - Split data into train, validation, and test sets (80-20 split with stratification).
    - Train an XGBoost model with `scale_pos_weight=2.16` to address class imbalance.
-   - Apply early stopping to prevent overfitting (`train_model.py`).
+   - Apply early stopping to prevent overfitting (`main.py`).
 5. **Evaluation**:
    - Evaluate on test set using precision, recall, F1-score, and ROC AUC.
    - Generate visualizations (ROC curve, feature importance) in `reports/figures`.
@@ -121,14 +121,14 @@ This project develops a machine learning solution to predict customer churn for 
 1. **Run the Full Pipeline with Hugging Face (Default)**:
    - Executes data processing, training, evaluation, and batch inference.
    ```bash
-   python src/models/train_model.py
+   python src/models/main.py
    ```
    - Outputs: Classification report, ROC AUC score, visualizations in `reports/figures`, batch predictions.
 
 2. **Run the Full Pipeline with OpenAI**:
    - Set `OPENAI_API_KEY` in `.env` and configure `factories.py` to use OpenAI.
    ```bash
-   python src/models/train_model.py --provider openai
+   python src/models/main.py --provider openai
    ```
    - Note: Adjust `feature_names.txt` to accommodate OpenAI's 1536-dimensional embeddings if used.
 
@@ -157,7 +157,7 @@ This project develops a machine learning solution to predict customer churn for 
 
 ## Maintenance
 - **Model Updates**:
-  - Retrain the model periodically with new data by running `train_model.py`.
+  - Retrain the model periodically with new data by running `main.py`.
   - Update `scale_pos_weight` based on new class imbalance ratios.
 - **Monitoring**:
   - Monitor prediction logs for drift in input data distributions.
@@ -175,7 +175,7 @@ This project develops a machine learning solution to predict customer churn for 
   - Ensure the scaler and model files in `models/` are not corrupted.
 - **Low Recall for Churn**:
   - Adjust `scale_pos_weight` or apply SMOTE as suggested in `reports/model_performance.md`.
-  - Lower the prediction threshold (e.g., from 0.5 to 0.3) in `model_training.py`.
+  - Lower the prediction threshold (e.g., from 0.5 to 0.3) in `train_model.py`.
 - **OpenAI Integration Issues**:
   - Confirm `OPENAI_API_KEY` is valid in `.env`.
   - Check API rate limits or network connectivity.
