@@ -11,7 +11,7 @@ Welcome to my professional data science project portfolio. This repository prese
 | [3. KMeans Online Retail](./03_KMeansOnline_Retail/) | Customer segmentation through RFM analysis and clustering using KMeans. |
 | [4. Sentiment Analysis – Amazon Alexa](./04_Sentiment_Analysis_Amazon_Alexa_Reviews/) | Review classification utilizing BERT, XGBoost, and a Flask API for deployment. |
 | [5. Sentiment Analysis with Neural Networks](./05_Sentiment_Analysis_with_Neural_Network/) | Comparative study of FFNN, CNN, RNN, and LSTM architectures for sentiment analysis. |
-| [6. Superstore Sales Analysis](./06_Superstore_Sales_Analysis/) | Sales and profitability analysis across customer segments, product categories, and regions. |
+| [6. Superstore Sales Analysis](./06_Superstore_Sales_Analysis/) | Sales and profitability analysis across customer segments, product categories, and regions.
 | [7. U.S. Traffic Accidents](./07_US_Traffic_Accidents/) | Geospatial, temporal, and meteorological analysis of over 7 million traffic accidents. |
 | [8. Time Series Projects](./08_Time_Series_Projects/) | Forecasting of energy consumption and sales using XGBoost, Prophet, and sktime.
 | [9. Churn Case Study](./09_Churn_Study_Case/) | Comprehensive case study applying an end-to-end data science lifecycle to customer churn prediction. |
@@ -103,12 +103,21 @@ Welcome to my professional data science project portfolio. This repository prese
 - Model ensembling with LightGBM and LSTM
 
 #### [8.2 Time Series Forecasting with Prophet and sktime](./08_Time_Series_Projects/Time_Series_sktime/)
-**Summary:** Forecasted daily sales data using Prophet, sktime, and XGBoost, integrating both classical and modern time series forecasting techniques.
+**Summary:** Implemented a comprehensive time series forecasting solution for daily sales data using Prophet, sktime, and XGBoost. The project focuses on aggregated sales (`sales_for_fc.csv`) with Prophet and subcategory-level forecasts (`subcategory_*.csv`) with sktime and XGBoost. Last updated: June 19, 2025.
 
-🔹 **Techniques applied**:
-- Seasonality and trend modeling with Prophet
-- Classical and machine learning time series models with sktime
-- Feature-enriched XGBoost forecasting
+🔹 **Key components:**
+- **Data Ingestion and Processing:**
+   - `data_ingestor.py`: Supports CSV, JSON, Parquet, and ZIP files, extracting `train.csv.zip` to `data/raw`.
+   - `make_dataset.py`: Processes raw data into `sales_for_fc.csv` (1230 daily observations) and `subcategory_*.csv`, adding time-based features and removing outliers.
+- **Prophet Workflow:**
+   - `train_model.py`: Tunes and saves Prophet hyperparameters to `models/prophet/params.pkl`.
+   - `backtesting.py`: Validates the model, saving metrics (MAE: 1811.86, RMSE: 2222.57, MAPE: 1147.20%, SMAPE: 77.60%) to `models/prophet/metrics.json`.
+   - `final_forecasting.py`: Generates a 30-step forecast, saving results to `models/prophet/forecasts.csv` and a plot to `reports/figures/prophet/prophet_forecast_sales.png`.
+- **Sktime and XGBoost:**
+   - predict_with_sktime.py and predict_with_xgboost.py: Forecast subcategory data using subcategory_*.csv.
+- **EDA:** `1.0-eda-total-sales.ipynb` and `2.0-subcategory-decomposition-and-analysis.ipynb` analyze trends and seasonality.
+- **Utilities:** `helper.py` supports workflow with functions like `load_sales_data`, compute_metrics, and `save_forecasts`.
+- **Performance:** Current metrics indicate high error rates; enhancements focus on hyperparameter tuning and feature engineering.
 
 ### [9. Churn Case Study](./09_Churn_Study_Case/)
 **Summary:** For this six-month project, we created a fictional company, StreamHub, Inc., a streaming platform with 10 million subscribers similar to Netflix and Spotify, using real-world figures to simulate the industry's reality. The objective is to conduct a case study aimed to predict customer churn and reduce the 5% monthly churn rate by 10% (saving $500,000/month) applying a complete data science lifecycle. Using the CRISP-DM methodology, we developed, deployed, and operationalized an XGBoost model (AUC-ROC = 0.85, recall = 0.74), delivering $2.93M in annual net savings (166% ROI). The project showcases end-to-end data science expertise, from business understanding to production-grade MLOps, aligning technical solutions with strategic business goals.
@@ -266,8 +275,7 @@ Selected projects adopt a modular and reproducible structure, as follows:
    ```
    or with Conda:
    ```bash
-   conda env create -f environment.yml
-   conda activate my_environment
+   uv sync
    ```
 3. Explore each project folder and follow the instructions provided in each `README.md` file.
 
