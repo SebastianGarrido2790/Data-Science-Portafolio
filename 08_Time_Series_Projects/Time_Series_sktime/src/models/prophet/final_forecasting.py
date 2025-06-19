@@ -1,122 +1,209 @@
-import pandas as pd
-from prophet import Prophet
-from datetime import datetime, timedelta, date
-import holidays
-import pickle
-import sys
 import os
+import pandas as pd
+import numpy as np
+import logging
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import matplotlib.colors
-import seaborn as sns
+from prophet import Prophet
+import holidays
+from datetime import timedelta
+from src.utility.helper import load_sales_data, save_forecasts
+import pickle
 
-# Import mape and smape from train_prophet_model (though not used here, kept for consistency)
-from src.models.prophet.train_model import mape, smape
-
-# Load data
-total_sales_df = pd.read_csv("../../data/processed/sales_for_fc.csv")
-total_sales_df["order_date"] = pd.to_datetime(total_sales_df["order_date"])
-total_sales_df.set_index("order_date", inplace=True)
-total_sales_df = total_sales_df.drop(columns=["Unnamed: 0"])
-
-# Hardcode the path to src/models/prophet
-prophet_dir = (
-    r"C:\Users\sebas\Documents\Data_Science\14-Dave_Ebbelaar\Time_Series_sktime\models"
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("logs/prophet.log"),
+        logging.StreamHandler(),
+    ],
 )
-sys.path.insert(0, prophet_dir)
+logger = logging.getLogger(__name__)
 
-# Define the file path using the hardcoded directory
-file_path = os.path.join(prophet_dir, "prophet_params.pkl")
 
-# Load the dictionary from the Pickle file
-try:
-    with open(file_path, "rb") as f:
-        dicts_loaded = pickle.load(f)
-    print("Loaded dicts:", dicts_loaded)
-except FileNotFoundError:
-    print(
-        f"Error: {file_path} not found. Ensure train_prophet_model.py has been run to create the file."
-    )
-    dicts_loaded = {}
-except Exception as e:
-    print(f"Error loading Pickle file: {e}")
-    dicts_loaded = {}
+def forecast_prophet(
+    feature: str,
+    df: pd.DataFrame,
+    params: dict,
+    horizon: int = 30,
+    confidence: float = 0.95,
+    plot: bool = True,
+) -> dict:
+    """
+    Generate forecast using Prophet for a single feature.
 
-# PROPHET MODEL
-prediction_days = 30
-forecast_start_date = max(total_sales_df.index)
-forecasted_dfs = []
+    Args:
+        feature (str): Feature name.
+        df (pd.DataFrame): Data with datetime index and feature column.
+        params (dict): Tuned hyperparameters.
+        horizon (int): Forecasting horizon in days.
+        confidence (float): Confidence level for prediction intervals.
+        plot (bool): If True, save forecast plot.
 
-us_holidays = holidays.US(years=[2015, 2019])
-holiday_df = pd.DataFrame(
-    {
-        "holiday": "US_Holidays",
-        "ds": pd.to_datetime(list(us_holidays.keys())),
-        "lower_window": -1,
-        "upper_window": 1,
-    }
-)
+    Returns:
+        dict: Dictionary with 'y_pred' (Series of predictions) and 'ci' (DataFrame of confidence intervals).
 
-# Define the root directory and figures path
-figures_dir = r"c:/Users/sebas/Documents/Data_Science/14-Dave_Ebbelaar/Time_Series_sktime/reports/figures"
-# figures_dir = os.path.join("reports", "figures")
-os.makedirs(figures_dir, exist_ok=True)  # Create directory if it doesn't exist
-
-for feature in total_sales_df.columns[:5]:
-    # Formatting
-    df_copy = total_sales_df[feature].copy().reset_index()
-    df_copy.columns = ["ds", "y"]
-    df_copy[["y"]] = df_copy[["y"]].apply(pd.to_numeric)
-    df_copy["ds"] = pd.to_datetime(df_copy["ds"])
-
-    df_copy_ = df_copy[df_copy["ds"] < forecast_start_date]
-
-    # Access the parameters, handling both flat and nested structures
-    if feature in dicts_loaded and isinstance(dicts_loaded[feature], dict):
-        if "0" in dicts_loaded[feature]:  # Nested structure
-            params_dict = dicts_loaded[feature]["0"]
-        else:  # Flat structure
-            params_dict = dicts_loaded[feature]
-    else:
-        print(
-            f"Warning: No valid parameters found for feature {feature}. Using defaults."
+    Raises:
+        ValueError: If data is invalid or empty.
+        Exception: For other errors during forecasting.
+    """
+    try:
+        logger.info(f"Generating forecast for feature: {feature}")
+        # Prepare DataFrame for Prophet
+        df_prophet = (
+            df[[feature]]
+            .reset_index()
+            .rename(columns={feature: "y", "order_date": "ds"})
         )
-        params_dict = {}  # Default to empty if not found
+        df_prophet["y"] = pd.to_numeric(df_prophet["y"], errors="coerce")
+        df_prophet["ds"] = pd.to_datetime(df_prophet["ds"])
+        df_prophet = df_prophet.dropna()
 
-    # Debug print to verify parameters
-    print("Params for", feature, ":", params_dict)
+        if df_prophet.empty:
+            raise ValueError(f"No valid data for feature {feature}")
 
-    # Model (use .get() to safely handle missing keys with defaults)
-    model = Prophet(
-        changepoint_prior_scale=params_dict.get("changepoint_prior_scale", 0.5),
-        seasonality_prior_scale=params_dict.get("seasonality_prior_scale", 10),
-        seasonality_mode=params_dict.get("seasonality_mode", "multiplicative"),
-        changepoint_range=params_dict.get("changepoint_range", 0.8),
-        interval_width=0.95,  # Widen confidence intervals
-        holidays=holiday_df,
-    )
+        # Prepare holidays
+        us_holidays = holidays.US(years=range(2015, 2026))
+        holiday_df = pd.DataFrame(
+            {
+                "holiday": "US_Holidays",
+                "ds": pd.to_datetime(list(us_holidays.keys())),
+                "lower_window": -1,
+                "upper_window": 1,
+            }
+        )
 
-    model.fit(df_copy_)
+        # Model
+        model = Prophet(
+            changepoint_prior_scale=params.get("changepoint_prior_scale", 0.05),
+            seasonality_prior_scale=params.get("seasonality_prior_scale", 1.0),
+            holidays_prior_scale=params.get("holidays_prior_scale", 1.0),
+            seasonality_mode=params.get("seasonality_mode", "multiplicative"),
+            changepoint_range=params.get("changepoint_range", 0.8),
+            yearly_seasonality=True,
+            weekly_seasonality=True,
+            daily_seasonality=True,
+            holidays=holiday_df,
+            interval_width=confidence,
+        )
+        model.fit(df_prophet)
 
-    future = model.make_future_dataframe(periods=prediction_days)
-    fcst_prophet_train = model.predict(future)
+        # Forecast
+        future = model.make_future_dataframe(periods=horizon)
+        forecast_df = model.predict(future)
+        # Filter future forecast
+        forecast_start_date = df_prophet["ds"].max()
+        forecast_df = forecast_df[forecast_df["ds"] >= forecast_start_date]
 
-    # Plot forecast and components
-    fig1 = model.plot(fcst_prophet_train)
-    plt.title(f"Forecast for {feature}")
-    # Save forecast plot with 100 dpi
-    forecast_plot_path = os.path.join(figures_dir, f"{feature}_forecast.png")
-    plt.savefig(forecast_plot_path, dpi=100, bbox_inches="tight")
-    plt.show()
-    plt.close()  # Close the figure to free memory
+        # Prepare output
+        result = {
+            "y_pred": forecast_df["yhat"],
+            "ci": forecast_df[["yhat_lower", "yhat_upper"]],
+        }
 
-    fig2 = model.plot_components(fcst_prophet_train)
-    plt.title(f"Components for {feature}")
-    # Save components plot with 100 dpi
-    components_plot_path = os.path.join(figures_dir, f"{feature}_components.png")
-    plt.savefig(components_plot_path, dpi=100, bbox_inches="tight")
-    plt.show()
-    plt.close()  # Close the figure to free memory
+        # Plotting
+        if plot:
+            try:
+                os.makedirs("../../../reports/figures/prophet/", exist_ok=True)
+                plt.figure(figsize=(12, 6))
+                plt.plot(
+                    df_prophet["ds"],
+                    df_prophet["y"],
+                    label="Historical Sales",
+                    color="black",
+                    alpha=0.5,
+                )
+                plt.plot(
+                    forecast_df["ds"],
+                    forecast_df["yhat"],
+                    label="Forecast",
+                    color="green",
+                    linestyle="--",
+                )
+                plt.fill_between(
+                    forecast_df["ds"],
+                    forecast_df["yhat_lower"],
+                    forecast_df["yhat_upper"],
+                    color="green",
+                    alpha=0.1,
+                    label="95% Confidence Interval",
+                )
+                plt.title(f"Prophet Forecast - {horizon}-step - {feature}")
+                plt.xlabel("Date")
+                plt.ylabel("Sales")
+                plt.legend()
+                plt.grid(True, alpha=0.3)
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+                plt.savefig(
+                    f"../../../reports/figures/prophet/prophet_forecast_{feature}.png"
+                )
+                plt.close()
+                logger.info(
+                    f"Saved plot for {feature} to ../../../reports/figures/prophet/prophet_forecast_{feature}.png"
+                )
+            except Exception as e:
+                logger.warning(f"Plotting failed for {feature}: {str(e)}")
 
-    forecasted_df = fcst_prophet_train[fcst_prophet_train["ds"] >= forecast_start_date]
-    forecasted_dfs.append(forecasted_df)
+        return result
+    except Exception as e:
+        logger.error(f"Error forecasting for {feature}: {str(e)}")
+        raise
+
+
+if __name__ == "__main__":
+    try:
+        # Load data
+        data_path = "../../../data/processed/sales_for_fc.csv"
+        abs_data_path = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), data_path)
+        )
+        if not os.path.exists(abs_data_path):
+            logger.error(f"Data file not found at: {abs_data_path}")
+            raise FileNotFoundError(f"Data file not found at: {abs_data_path}")
+        logger.info(f"Loading data from: {abs_data_path}")
+        df = load_sales_data(data_path)
+
+        # Load parameters
+        params_path = "../../../models/prophet/params.pkl"
+        abs_params_path = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), params_path)
+        )
+        if not os.path.exists(abs_params_path):
+            logger.error(f"Parameters file not found at: {abs_params_path}")
+            raise FileNotFoundError(f"Parameters file not found at: {abs_params_path}")
+        try:
+            with open(params_path, "rb") as f:
+                params_dict = pickle.load(f)
+            logger.info(f"Loaded parameters from: {abs_params_path}")
+        except Exception as e:
+            logger.error(f"Error loading parameters: {str(e)}")
+            raise
+
+        # Forecast for each feature
+        all_forecasts = {}
+        for feature in df.columns:
+            if feature in params_dict:
+                all_forecasts[feature] = forecast_prophet(
+                    feature,
+                    df,
+                    params_dict[feature],
+                    horizon=30,
+                    confidence=0.95,
+                    plot=True,
+                )
+            else:
+                logger.warning(f"No parameters found for feature: {feature}. Skipping.")
+
+        # Save forecasts
+        forecasts_path = "../../../models/prophet/forecasts.csv"
+        os.makedirs(os.path.dirname(forecasts_path), exist_ok=True)
+        save_forecasts(all_forecasts, output_path=forecasts_path, model="prophet")
+        logger.info(f"Saved forecasts to: {forecasts_path}")
+
+    except Exception as e:
+        logger.error(f"Error in main execution: {str(e)}")
+        raise

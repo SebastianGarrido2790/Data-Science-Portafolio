@@ -1,154 +1,187 @@
-# Time Series Forecasting with Multiple Techniques
+# Sales Forecasting Project
 
-This project focuses on analyzing and forecasting time series data, specifically daily sales data, using multiple techniques: **Prophet**, **sktime**, and **XGBoost**. It includes data processing, exploratory data analysis (EDA), model training, backtesting, and final forecasting, all organized within a structured directory layout. The primary dataset, `sales_for_fc.csv`, represents aggregated daily sales data derived from various subcategories.
+## Overview
+This project implements a time series forecasting solution for sales data using multiple machine learning models, including Prophet, Sktime, and XGBoost. The primary dataset is derived from `sales_for_fc.csv` for aggregated sales forecasting with Prophet, and `subcategory_*.csv` files for subcategory-level predictions with Sktime and XGBoost. The project includes exploratory data analysis (EDA) notebooks, data ingestion and processing scripts, and a modular codebase to support model training, validation, and forecasting. The focus is on providing reliable, scalable, and maintainable predictions for business decision-making.
 
-## Project Overview
+## Objectives
+- Develop accurate time series forecasts for total sales and subcategories.
+- Evaluate model performance using metrics such as MAE, RMSE, MAPE, and SMAPE.
+- Provide visualizations to interpret trends and forecast uncertainty.
+- Ensure a reusable and extensible framework for future enhancements.
 
-The goal is to predict future sales by leveraging different time series forecasting methods:
-
-- **Prophet**: A robust tool for handling seasonality and trends, with hyperparameter tuning and holiday effects.
-- **sktime**: A flexible time series toolkit, here using AutoARIMA or Prophet implementations for forecasting.
-- **XGBoost**: A machine learning approach with feature engineering for time series prediction.
-
-The project supports reproducibility through a Conda environment and provides visualizations and performance metrics for evaluation.
-
-## Setup Instructions
-
-To set up the project environment:
-
-1. **Install Conda (if not already installed):** Follow the instructions at [conda.io](https://conda.io).
-
-2. **Create the Conda environment using the provided `time_series_env.yml`:**
-
-```bash
-conda env create -f time_series_env.yml
+## Project Structure
+```
+sales-forecasting
+│
+├── LICENSE
+├── README.md           <- This file.
+├── data
+│   ├── external        <- Data from third-party sources.
+│   ├── interim         <- Intermediate transformed data.
+│   ├── processed       <- Final datasets for modeling.
+│   │   ├── subcategories
+│   │   │    └── subcategory_*.csv
+│   │   └── sales_for_fc.csv
+│   └── raw             <- Original, immutable data dump.
+│
+├── logs
+│
+├── models              <- Trained models, predictions, and summaries.
+│   ├── prophet
+│   ├── sktime
+│   └── xgboost
+│
+├── notebooks           <- Jupyter notebooks for EDA.
+│   ├── 1.0-eda-total-sales.ipynb   <- EDA for total sales with decomposition.
+│   └── 2.0-subcategory-decomposition-and-analysis.ipynb
+│
+├── references          <- Data dictionaries and manuals.
+│
+├── reports             <- Generated analysis files.
+│   ├── figures         <- Graphics for reporting.
+│   │   ├── prophet
+│   │   ├── sktime
+│   │   ├── subcategories
+│   │   ├── trends
+│   │   ├── xgboost
+│   │   ├── sales_components.png
+│   │   └── sales_forecast.png
+│   ├── prophet_overview.md
+│   ├── subcategories.md
+│   ├── subcategory_notebook.md
+│   └── tune_forecaster.md
+│
+├── pyproject.toml
+├── uv.lock
+├── .gitignore
+│
+├── src                 <- Source code.
+│   ├── __init__.py     <- Makes src a Python module.
+│   ├── data            <- Data ingestion and processing scripts.
+│   │   ├── data_ingestor.py
+│   │   └── make_dataset.py
+│   ├── features        <- Feature engineering scripts.
+│   │   └── build_features.py
+│   ├── models          <- Model training and prediction scripts.
+│   │   ├── prophet
+│   │   │    ├── backtesting.py
+│   │   │    ├── final_forecasting.py
+│   │   │    └── train_model.py
+│   │   ├── predict_with_sktime.py
+│   │   └── predict_with_xgboost.py
+│   ├── utils           <- Utility scripts.
+│   │   ├── helper.py   <- Functions to support workflow.
+│   │   └── plot_settings.py
 ```
 
-3. **Activate the environment:**
+## Methodology
+1. **Data Ingestion**: Uses `data_ingestor.py` to handle CSV, JSON, Parquet, and ZIP files, extracting and validating raw data into `data/raw`.
+2. **Data Processing**: `make_dataset.py` cleans data, aggregates sales by subcategory, adds time-based features, removes outliers, and saves processed datasets to `data/processed`.
+3. **Exploratory Data Analysis**: Notebooks (e.g., `1.0-eda-total-sales.ipynb`) decompose time series into trend, seasonality, and residuals.
+4. **Model Training**: `train_model.py` (Prophet) tunes hyperparameters and saves them to `models/prophet/params.pkl`.
+5. **Model Validation**: `backtesting.py` (Prophet) evaluates performance with metrics saved to `models/prophet/metrics.json`.
+6. **Forecasting**: `final_forecasting.py` (Prophet) generates 30-step forecasts and plots, saved to `models/prophet/forecasts.csv` and `reports/figures/prophet`.
+7. **Subcategory Forecasting**: `predict_with_sktime.py` and `predict_with_xgboost.py` use `subcategory_*.csv` for detailed predictions.
 
+## Technical Architecture Description
+- **Data Flow**: Raw data (`data/raw`) is ingested via `data_ingestor.py`, processed by `make_dataset.py`, and stored as `sales_for_fc.csv` (Prophet) or `subcategory_*.csv` (Sktime/XGBoost) in `data/processed`. Interim data is saved in `data/interim`.
+- **Modeling**: Prophet scripts (`train_model.py`, `backtesting.py`, `final_forecasting.py`) operate on aggregated sales data. Sktime and XGBoost scripts use subcategory data. Models are stored in `models/`.
+- **Utilities**: `helper.py` provides functions like `load_sales_data`, `compute_metrics`, and `save_forecasts` to support workflow consistency.
+- **Visualization**: Plots are generated in `reports/figures` using `matplotlib`, with settings from `plot_settings.py`.
+- **Logging**: All scripts log to `logs/` for debugging and tracking.
+
+## Installation Instructions
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/SebastianGarrido2790/sales-forecasting.git
+   cd sales-forecasting
+   ```
+2. **Set Up Virtual Environment**:
+   ```bash
+   uv init
+   uv sync
+   ```
+3. **Install Dependencies**:
+   Ensure `pyproject.toml` includes required packages (e.g., `prophet`, `sktime`, `xgboost`, `pandas`, `numpy`, `matplotlib`, `scikit-learn`, `pyyaml`). Install with:
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+4. **Verify Installation**:
+   ```bash
+   python -c "import prophet; print(prophet.__version__)"
+   python -c "import sktime; print(sktime.__version__)"
+   python -c "import xgboost; print(xgboost.__version__)"
+   ```
+
+## Usage Examples
+### Run Data Ingestion and Processing
 ```bash
-conda activate time_series_env
+uv run src/data/data_ingestor.py
+uv run src/data/make_dataset.py
 ```
+- Ingests `train.csv.zip` and processes it into `data/processed/subcategories/subcategory_*.csv`.
 
-The environment includes dependencies like `prophet`, `sktime`, `xgboost`, `pandas`, `numpy`, `matplotlib`, `jupyterlab`, and more, as specified in `time_series_env.yml`.
-
-## Folder Structure
-
-The project is organized as follows:
-
-- **data/**: Contains datasets at various stages.
-- **external/**: Data from third-party sources.
-- **interim/**: Intermediate data (e.g., `sales_ts.csv`, `total_sales.csv`).
-- **processed/**: Final datasets for modeling (e.g., `sales_for_fc.csv`).
-- **raw/**: Original, unprocessed data.
-- **docs/**: Project documentation (default Sphinx setup).
-- **models/**: Stores trained models, predictions, and summaries (e.g., `prophet_params.pkl`).
-- **notebooks/**: Jupyter notebooks for analysis.
-  - `EDA.ipynb`: Exploratory data analysis with visualizations and stationarity tests.
-- **references/**: Supplementary materials like data dictionaries or manuals.
-- **reports/**: Generated reports and visualizations.
-  - **figures/**: Plots from forecasting (e.g., `sales_forecast.png`).
-- **src/**: Source code directory.
-  - **data/**: Scripts for data preparation (e.g., `make_dataset.py`).
-  - **features/**: Feature engineering scripts (e.g., `build_features.py`).
-  - **models/**: Model training and prediction scripts.
-    - **Prophet/**:
-      - `train_model.py`: Trains Prophet models with hyperparameter tuning.
-      - `backtesting.py`: Evaluates models via backtesting.
-      - `final_forecasting.py`: Generates final forecasts and plots.
-    - `predict_with_skime.py`: Forecasts using sktime (e.g., AutoARIMA or Prophet).
-    - `predict_with_xgboost.py`: Forecasts using XGBoost with feature engineering.
-  - **utils/**: Utility scripts (e.g., `plot_settings.py`).
-  - **visualization/**: Visualization scripts (includes `EDA.ipynb`).
-- `LICENSE`: Project license file.
-- `README.md`: This file.
-- `requirements.txt`: Pip-generated dependency list (secondary to `time_series_env.yml`).
-- `time_series_env.yml`: Conda environment specification.
-
-## Data
-
-The main dataset is `sales_for_fc.csv` in `data/processed/`, containing daily sales aggregated from subcategories after filtering out low-volume ones (see `EDA.ipynb`). The data originates from `data/interim/total_sales.csv`, processed to focus on mid- and high-volume subcategories.
-
-## Models
-
-Three forecasting approaches are implemented:
-
-### Prophet (src/models/Prophet/)
-Handles seasonality, trends, and holidays.
-
-**Scripts:**
-- `train_model.py`: Tunes hyperparameters and saves models.
-- `backtesting.py`: Validates forecasts over a 30-day horizon.
-- `final_forecasting.py`: Predicts 30 days ahead with plots.
-
-### sktime (src/models/predict_with_skime.py)
-Uses AutoARIMA or Prophet for forecasting.
-
-- Supports validation (last 30 days) and future forecasting with confidence intervals.
-
-### XGBoost (src/models/predict_with_xgboost.py)
-Employs feature engineering (lags, rolling stats, holidays) and hyperparameter tuning.
-
-- Forecasts 30 days beyond the dataset.
-
-## Notebooks
-
-**EDA.ipynb (src/visualization/):**
-- Performs exploratory data analysis.
-- Includes time series decomposition, stationarity tests (ADF), moving averages, and data filtering.
-- Outputs `sales_for_fc.csv` after processing.
-
-## Running the Project
-
-1. **Set up the environment:** (see Setup Instructions).
-
-2. **Prepare the data:**
-   - Run `EDA.ipynb` to generate `sales_for_fc.csv` from `total_sales.csv`.
-
-3. **Run the models:**
-
-### Prophet:
+### Train Prophet Model
 ```bash
-python src/models/Prophet/train_model.py      # Train and save model parameters
-python src/models/Prophet/backtesting.py        # Backtest over 30 days
-python src/models/Prophet/final_forecasting.py   # Forecast 30 days ahead
+uv run src/models/prophet/train_model.py
 ```
+- Trains the model and saves parameters to `models/prophet/params.pkl`.
 
-### sktime:
+### Backtest Prophet Model
 ```bash
-python src/models/predict_with_skime.py          # Validate and forecast 30 days
+uv run src/models/prophet/backtesting.py
 ```
+- Validates the model and saves metrics to `models/prophet/metrics.json`.
 
-### XGBoost:
+### Generate Prophet Forecast
 ```bash
-python src/models/predict_with_xgboost.py        # Train, validate, and forecast 30 days
+uv run src/models/prophet/final_forecasting.py
 ```
+- Produces a 30-step forecast and plot in `reports/figures/prophet/`.
 
-4. **View results:**
-- Model outputs (e.g., `prophet_params.pkl`) are in `models/`.
-- Forecast plots and metrics are in `reports/figures/`.
-
-## Example Commands
-
-To run the full Prophet pipeline:
-
+### Run Sktime or XGBoost Predictions
 ```bash
-conda activate time_series_env
-python src/models/Prophet/train_model.py
-python src/models/Prophet/backtesting.py
-python src/models/Prophet/final_forecasting.py
+uv run src/models/predict_with_sktime.py
+uv run src/models/predict_with_xgboost.py
 ```
+- Uses `subcategory_*.csv` for subcategory forecasts.
 
-## Results
+### Explore EDA Notebooks
+- Open `notebooks/1.0-eda-total-sales.ipynb` or `2.0-subcategory-decomposition-and-analysis.ipynb` in Jupyter Notebook to analyze trends and seasonality.
 
-- **Prophet:** Backtesting metrics (MAPE, SMAPE, MAE) in console; forecasts and component plots in `reports/figures/`.
-- **sktime:** MAE, RMSE, MAPE from validation; forecasts in console and plots.
-- **XGBoost:** MAE, RMSE, SMAPE from test set; 30-day forecasts plotted and printed.
+## Key Results
+- **Prophet Metrics** (from `models/prophet/metrics.json`):
+  - MAE: 1811.86, RMSE: 2222.57, MAPE: 1147.20%, SMAPE: 77.60% (indicates room for improvement).
+- **Prophet Forecast** (from `models/prophet/forecasts.csv`):
+  - 30-day forecast for `sales` (e.g., day 1259: 2077.43, CI: -1922.57 to 6019.99).
+- **Visualization**: `reports/figures/prophet/prophet_forecast_sales.png` shows historical sales and a 30-step forecast with a 95% confidence interval.
 
-Results are stored in:
-- `models/`: Model parameters and predictions.
-- `reports/figures/`: Visualization outputs.
+## Maintenance
+- **Version Control**: Use Git to track changes; update `pyproject.toml` and `uv.lock` with dependency versions.
+- **Data Updates**: Regularly ingest new data with `data_ingestor.py` and reprocess with `make_dataset.py`.
+- **Model Retraining**: Periodically run `train_model.py` with updated data to refine parameters.
+- **Documentation**: Update `README.md`, `references/`, and `reports/` with new findings or changes.
+
+## Troubleshooting
+- **Installation Errors**: Ensure all dependencies are installed; use `uv pip install --force-reinstall <package>` if issues persist.
+- **Data Ingestion Failures**: Check `logs/data_ingestion.log` for file path or format errors; verify `train.csv.zip` exists.
+- **Model Errors**: Review `logs/prophet.log` for stack traces; ensure `sales_for_fc.csv` and `params.pkl` are valid.
+- **Performance Issues**: Increase memory or reduce dataset size; adjust `horizon` in forecasting scripts.
+- **Common Fixes**:
+  - Missing Dates: Preprocess `sales_for_fc.csv` with `load_sales_data` to fill gaps.
+  - Wide Confidence Intervals: Refine hyperparameters in `train_model.py`.
+
+## Contributing
+- Fork the repository, create a feature branch, and submit pull requests.
+- Follow PEP 8 style guidelines and add unit tests in a future `tests/` directory.
+- Report issues or suggestions via GitHub Issues.
 
 ## License
+This project is licensed under the terms of the [LICENSE](./LICENSE.txt) file. Ensure you comply with the licensing agreements when using or modifying the code.
 
-This project is licensed under the terms in the `MIT LICENSE` (./LICENSE) file.
+---
+
+### Notes
+- `predict_with_sktime.py` and `predict_with_xgboost.py` utilize `subcategory_*.csv` for subcategory-level forecasting.
+- `train_model.py`, `backtesting.py`, and `final_forecasting.py` (Prophet) use `sales_for_fc.csv` for aggregated sales forecasting.
+- `helper.py` is a critical utility script containing functions (`load_sales_data`, `compute_metrics`, `save_forecasts`, etc.) to support the workflow across all scripts.

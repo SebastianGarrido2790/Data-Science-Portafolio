@@ -1,114 +1,145 @@
-import numpy as np
-import pandas as pd
-import pickle
 import os
-
-import math
+import pandas as pd
+import numpy as np
+import logging
 import itertools
-from scipy import stats
-import time
-
-from dateutil import parser
-from datetime import datetime, timedelta, date
-
 from prophet import Prophet
-from prophet.diagnostics import performance_metrics
-from prophet.plot import plot_cross_validation_metric
-from prophet.diagnostics import cross_validation
-
+from prophet.diagnostics import cross_validation, performance_metrics
+from joblib import Parallel, delayed
+import pickle
 import warnings
+from src.utility.helper import load_sales_data
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("logs/prophet.log"),
+        logging.StreamHandler(),
+    ],
+)
+logger = logging.getLogger(__name__)
+
+# Suppress warnings
 warnings.simplefilter("ignore")
 
 
-def mape(actual, pred):
+def tune_prophet(feature: str, df: pd.DataFrame, param_grid: dict) -> dict:
     """
-    Mean Absolute Percentage Error (MAPE) Function
+    Tune Prophet hyperparameters for a single feature using cross-validation.
 
-    input: list/series for actual values and predicted values
-    output: mape value
+    Args:
+        feature (str): Column name in the dataset.
+        df (pd.DataFrame): Time series data with datetime index and feature columns.
+        param_grid (dict): Hyperparameter grid for tuning.
+
+    Returns:
+        dict: Best parameters and SMAPE score.
     """
-    actual, pred = np.array(actual), np.array(pred)
-    mask = actual != 0  # Exclude zeros
-    return np.mean(np.abs((actual[mask] - pred[mask]) / actual[mask])) * 100
+    try:
+        logger.info(f"Tuning Prophet for feature: {feature}")
+        df_prophet = (
+            df[[feature]]
+            .reset_index()
+            .rename(columns={feature: "y", "order_date": "ds"})
+        )
+        df_prophet["y"] = pd.to_numeric(df_prophet["y"], errors="coerce")
+        df_prophet["ds"] = pd.to_datetime(df_prophet["ds"])
+        df_prophet = df_prophet.dropna()
 
-
-def smape(actual, pred):
-    """
-    Symmetric Mean Absolute Percentage Error (SMAPE) Function
-
-    input: list/series for actual values and predicted values
-    output: smape value
-    """
-    actual, pred = np.array(actual), np.array(pred)
-    return 100 * np.mean(2 * np.abs(pred - actual) / (np.abs(actual) + np.abs(pred)))
-
-
-# Only run the tuning and saving when the script is run directly
-if __name__ == "__main__":
-    # Load data
-    total_sales_df = pd.read_csv("../../data/processed/sales_for_fc.csv")
-    total_sales_df["order_date"] = pd.to_datetime(total_sales_df["order_date"])
-    total_sales_df.set_index("order_date", inplace=True)
-    total_sales_df = total_sales_df.drop(columns=["Unnamed: 0"])
-
-    # Create time series parameters
-    changepoint_prior_scale_range = np.linspace(0.1, 0.5, num=5).tolist()
-    seasonality_prior_scale_range = np.linspace(1.0, 20, num=5).tolist()
-    holidays_prior_scale_range = np.linspace(0.01, 10, num=5).tolist()
-    seasonality_mode_options = ["additive", "multiplicative"]
-    changepoint_range = list(np.linspace(0.5, 0.95, num=5))
-
-    start_time = time.time()
-    dicts = {}
-
-    # Hyperparameters
-    for feature in total_sales_df.columns:
-        category_df = total_sales_df[feature].copy().reset_index()
-        category_df.columns = ["ds", "y"]
-        category_df[["y"]] = category_df[["y"]].apply(pd.to_numeric)
-        category_df["ds"] = pd.to_datetime(category_df["ds"])
-
-        param_grid = {
-            "changepoint_prior_scale": changepoint_prior_scale_range,
-            "seasonality_prior_scale": seasonality_prior_scale_range,
-            "holidays_prior_scale": holidays_prior_scale_range,
-            "seasonality_mode": seasonality_mode_options,
-            "changepoint_range": changepoint_range,
-        }
+        if df_prophet.empty:
+            raise ValueError(f"No valid data for feature {feature}")
 
         all_params = [
             dict(zip(param_grid.keys(), v))
             for v in itertools.product(*param_grid.values())
         ]
-        all_params = np.random.choice(all_params, size=10, replace=False)
-        smapes = []
-
-        for params in all_params:
-            model = Prophet(**params).fit(category_df)
-            df_cv = cross_validation(
-                model, initial="730 days", period="30 days", horizon="30 days"
-            )
-            df_p = performance_metrics(df_cv, rolling_window=1)
-            print(df_p)
-            smapes.append(df_p["smape"].values[0])
-
-        tuning_results = pd.DataFrame(all_params)
-        tuning_results["smape"] = smapes
-        print(feature)
-        print(tuning_results.head())
-
-        params_dict = dict(
-            tuning_results.sort_values("smape").reset_index(drop=True).iloc[0]
+        all_params = np.random.choice(
+            all_params, size=min(25, len(all_params)), replace=False
         )
-        params_dict["column"] = feature
-        dicts[feature] = params_dict
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+        def evaluate_params(params):
+            try:
+                model = Prophet(
+                    **params,
+                    yearly_seasonality=True,
+                    weekly_seasonality=True,
+                    daily_seasonality=True,
+                )
+                model.fit(df_prophet)
+                df_cv = cross_validation(
+                    model, initial="730 days", period="30 days", horizon="30 days"
+                )
+                df_p = performance_metrics(df_cv, rolling_window=1)
+                return params, df_p["smape"].values[0]
+            except Exception as e:
+                logger.warning(f"Failed parameters {params}: {str(e)}")
+                return params, np.inf
 
-    # Hardcode the path to src/models/prophet using raw string
-    file_path = r"C:\Users\sebas\Documents\Data_Science\14-Dave_Ebbelaar\Time_Series_sktime\models\prophet_params.pkl"
+        results = Parallel(n_jobs=4)(
+            delayed(evaluate_params)(params) for params in all_params
+        )
+        smapes = [r[1] for r in results]
+        best_params = min(results, key=lambda x: x[1])[0]
+        best_params["smape"] = min(smapes)
+        best_params["feature"] = feature
+        logger.info(f"Best parameters for {feature}: {best_params}")
+        return best_params
+    except Exception as e:
+        logger.error(f"Error tuning Prophet for {feature}: {str(e)}")
+        raise
 
-    # Save dicts to a Pickle file
-    with open(file_path, "wb") as f:
-        pickle.dump(dicts, f)
+
+if __name__ == "__main__":
+    try:
+        # Define data path relative to sales-forecasting root
+        data_path = "../../../data/processed/sales_for_fc.csv"
+        # Validate file existence
+        abs_data_path = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), data_path)
+        )
+        if not os.path.exists(abs_data_path):
+            logger.error(f"Data file not found at: {abs_data_path}")
+            raise FileNotFoundError(f"Data file not found at: {abs_data_path}")
+
+        # Load data
+        logger.info(f"Loading data from: {data_path}")
+        df = load_sales_data(data_path)
+        # Ensure datetime index (load_sales_data already sets this, but reinforce for safety)
+        if not isinstance(df.index, pd.DatetimeIndex):
+            df["order_date"] = pd.to_datetime(df["order_date"])
+            df.set_index("order_date", inplace=True)
+        df = df.drop(columns=["Unnamed: 0"], errors="ignore")
+
+        # Define hyperparameter grid
+        param_grid = {
+            "changepoint_prior_scale": [0.01, 0.05, 0.1, 0.5],
+            "seasonality_prior_scale": [0.1, 1.0, 10.0],
+            "holidays_prior_scale": [0.1, 1.0, 10.0],
+            "seasonality_mode": ["additive", "multiplicative"],
+            "changepoint_range": [0.8, 0.9],
+        }
+
+        # Tune parameters for each feature
+        params_dict = {}
+        for feature in df.columns:
+            params_dict[feature] = tune_prophet(feature, df, param_grid)
+
+        # Save parameters
+        params_path = "../../../models/prophet/params.pkl"
+        os.makedirs(os.path.dirname(params_path), exist_ok=True)
+        with open(params_path, "wb") as f:
+            pickle.dump(params_dict, f)
+        logger.info(f"Saved parameters to: {params_path}")
+
+    except Exception as e:
+        logger.error(f"Error in main execution: {str(e)}")
+        raise
+    finally:
+        try:
+            from joblib.externals.loky import get_reusable_executor
+
+            get_reusable_executor().shutdown(wait=True)
+        except Exception as e:
+            logger.warning(f"Joblib cleanup failed: {str(e)}")
